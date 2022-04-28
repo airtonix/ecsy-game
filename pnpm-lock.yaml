@@ -16,6 +16,7 @@ importers:
       '@nrwl/nx-cloud': latest
       '@nrwl/storybook': ~14.0.3
       '@nrwl/workspace': ~13.10.3
+      '@nxext/vite': ^13.2.5
       '@trumbitta/nx-plugin-unused-deps': ~1.10.0
       '@types/jest': ~27.0.2
       '@types/node': ~16.11.7
@@ -55,6 +56,7 @@ importers:
       '@nrwl/nx-cloud': 14.0.1_typescript@4.6.3
       '@nrwl/storybook': 14.0.3_1d32ee2098372232092f817452dd15e0
       '@nrwl/workspace': 13.10.3_6caa5b054b7df29d7e2920e61a6f492d
+      '@nxext/vite': 13.2.5_1060419b2bfc799645dba21e222fe598
       '@trumbitta/nx-plugin-unused-deps': 1.10.0_@nrwl+workspace@13.10.3
       '@types/jest': 27.0.2
       '@types/node': 16.11.7
@@ -1634,12 +1636,6 @@ packages:
       - typescript
     dev: false
 
-  /@nrwl/cli/13.10.3:
-    resolution: {integrity: sha512-E5vBW3pSg0fW6F8VS2hTd5nf2UulJQcXGNK5jKVV9AwIfWUT1Sm91GmngU/OmS0uAaqzcikTPP19BUUn8hR05Q==}
-    dependencies:
-      nx: 13.10.3_typescript@4.6.3
-    dev: false
-
   /@nrwl/cli/13.10.3_typescript@4.6.3:
     resolution: {integrity: sha512-E5vBW3pSg0fW6F8VS2hTd5nf2UulJQcXGNK5jKVV9AwIfWUT1Sm91GmngU/OmS0uAaqzcikTPP19BUUn8hR05Q==}
     dependencies:
@@ -2051,6 +2047,24 @@ packages:
       - ts-node
       - typescript
       - utf-8-validate
+    dev: false
+
+  /@nxext/vite/13.2.5_1060419b2bfc799645dba21e222fe598:
+    resolution: {integrity: sha512-g5F+JnE7nqM07pd89R9ULh7XkVXgwlzOc1NXiEF/at2yR/j6LW9iq3y0bi3AfdKf8ZfWjwV3GwmbBdHd1q2h7g==}
+    peerDependencies:
+      '@nrwl/workspace': ^13.4.0
+      vite: ^2.9.5
+    dependencies:
+      '@nrwl/devkit': 13.10.3_typescript@4.6.3
+      '@nrwl/workspace': 13.10.3_6caa5b054b7df29d7e2920e61a6f492d
+      globrex: 0.1.2
+      rxjs: 7.5.5
+      rxjs-for-await: 1.0.0_rxjs@7.5.5
+      tsconfig-paths: 3.14.1
+      vite: 2.9.6
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: false
 
   /@parcel/watcher/2.0.4:
@@ -6768,7 +6782,7 @@ packages:
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@nrwl/cli': 13.10.3
+      '@nrwl/cli': 13.10.3_typescript@4.6.3
       '@nrwl/tao': 13.10.3_typescript@4.6.3
       '@parcel/watcher': 2.0.4
       '@swc-node/register': 1.5.1_typescript@4.6.3
@@ -7550,6 +7564,14 @@ packages:
       rxjs: ^6.0.0
     dependencies:
       rxjs: 6.6.7
+    dev: false
+
+  /rxjs-for-await/1.0.0_rxjs@7.5.5:
+    resolution: {integrity: sha512-MJhvf1vtQaljd5wlzsasvOjcohVogzkHkUI0gFE9nGhZ15/fT2vR1CjkLEh37oRqWwpv11vHo5D+sLM+Aw9Y8g==}
+    peerDependencies:
+      rxjs: ^7.0.0
+    dependencies:
+      rxjs: 7.5.5
     dev: false
 
   /rxjs/6.6.7:
