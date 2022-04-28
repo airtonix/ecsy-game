@@ -23,6 +23,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ~5.18.0
       '@typescript-eslint/parser': ~5.18.0
       babel-loader: ~8.0.2
+      ecstra: 0.0.2
       eslint: ~8.12.0
       eslint-config-prettier: ~8.1.0
       eslint-plugin-import: ~2.25.2
@@ -63,6 +64,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.18.0_a07dca3bdfc4bfa60f4dda0c1f9e3287
       '@typescript-eslint/parser': 5.18.0_eslint@8.12.0+typescript@4.6.3
       babel-loader: 8.0.6_@babel+core@7.0.1+webpack@5.0.0
+      ecstra: 0.0.2
       eslint: 8.12.0
       eslint-config-prettier: 8.1.0_eslint@8.12.0
       eslint-plugin-import: 2.25.2_eslint@8.12.0
@@ -1634,6 +1636,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    dev: false
+
+  /@nrwl/cli/13.10.3:
+    resolution: {integrity: sha512-E5vBW3pSg0fW6F8VS2hTd5nf2UulJQcXGNK5jKVV9AwIfWUT1Sm91GmngU/OmS0uAaqzcikTPP19BUUn8hR05Q==}
+    dependencies:
+      nx: 13.10.3_typescript@4.6.3
     dev: false
 
   /@nrwl/cli/13.10.3_typescript@4.6.3:
@@ -3853,6 +3861,10 @@ packages:
     dependencies:
       find-up: 3.0.0
       minimatch: 3.0.4
+    dev: false
+
+  /ecstra/0.0.2:
+    resolution: {integrity: sha512-8QrzQ1tISPf22gDX3hNdtUm/BtoW/h34qqe+unJtB8hIf3y0zB7StyKuEsjqTslHicXvuR98ju7IJPvxNmUyVw==}
     dev: false
 
   /ejs/3.1.7:
@@ -6782,7 +6794,7 @@ packages:
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@nrwl/cli': 13.10.3_typescript@4.6.3
+      '@nrwl/cli': 13.10.3
       '@nrwl/tao': 13.10.3_typescript@4.6.3
       '@parcel/watcher': 2.0.4
       '@swc-node/register': 1.5.1_typescript@4.6.3
