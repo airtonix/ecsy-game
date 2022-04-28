@@ -20,7 +20,7 @@ export class ZombieFollowSystem extends System {
       const deltaX = target.x - position.x;
       const deltaY = target.y - position.y;
       const len = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      if (len >= 0.00001) {
+      if (len > 1) {
         position.x += speed * delta * (deltaX / len);
         position.y += speed * delta * (deltaY / len);
       }
