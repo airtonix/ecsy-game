@@ -1,4 +1,6 @@
 {
   "version": 2,
-  "projects": {}
+  "projects": {
+    "apps-game-game": "packages/apps/game/game"
+  }
 }
