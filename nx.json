@@ -1,6 +1,6 @@
 {
   "extends": "@nrwl/workspace/presets/core.json",
-  "npmScope": "ecsy-game",
+  "npmScope": "@ecsygame",
   "affected": {
     "defaultBase": "master"
   },
@@ -25,6 +25,5 @@
         "linter": "eslint"
       }
     }
-  },
-  "defaultProject": "apps-game-game"
+  }
 }
