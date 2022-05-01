@@ -1,3 +1,1 @@
-export const App = () => {
-  return;
-};
+export { App } from './App';
