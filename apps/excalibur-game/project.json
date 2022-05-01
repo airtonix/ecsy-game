@@ -1,14 +1,16 @@
 {
-  "root": "apps/game",
-  "sourceRoot": "apps/game/src",
+  "root": "apps/excalibur-game",
+  "sourceRoot": "apps/excalibur-game/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nxext/vite:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/game",
+        "outputPath": "dist/apps/excalibur-game",
         "baseHref": "/",
         "configFile": "@nxext/vite/plugins/vite"
       },
@@ -16,8 +18,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/game/src/environments/environment.ts",
-              "with": "apps/game/src/environments/environment.prod.ts"
+              "replace": "apps/excalibur-game/src/environments/environment.ts",
+              "with": "apps/excalibur-game/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -26,7 +28,7 @@
     "serve": {
       "executor": "@nxext/vite:dev",
       "options": {
-        "outputPath": "dist/apps/game",
+        "outputPath": "dist/apps/excalibur-game",
         "baseHref": "/",
         "configFile": "@nxext/vite/plugins/vite"
       },
@@ -34,8 +36,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/game/src/environments/environment.ts",
-              "with": "apps/game/src/environments/environment.prod.ts"
+              "replace": "apps/excalibur-game/src/environments/environment.ts",
+              "with": "apps/excalibur-game/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -43,16 +45,22 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/game/**/*.{ts,js,tsx,jsx}"]
+        "lintFilePatterns": [
+          "apps/excalibur-game/**/*.{ts,js,tsx,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/game"],
+      "outputs": [
+        "coverage/apps/excalibur-game"
+      ],
       "options": {
-        "jestConfig": "apps/game/jest.config.js",
+        "jestConfig": "apps/excalibur-game/jest.config.js",
         "passWithNoTests": true
       }
     }

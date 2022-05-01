@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'apps-game-game',
+  displayName: 'apps/excalibur-game',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {

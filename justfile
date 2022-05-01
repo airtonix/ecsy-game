@@ -55,3 +55,6 @@ fix:
 
 nx *command='':
     nx {{command}}
+
+game *command='serve':
+    nx {{command}} game
