@@ -1,6 +1,6 @@
 import { Input } from 'excalibur';
 
-import { Game } from '../Core/Game';
+import { Game, zoomToActor } from '../Core/Game';
 
 import { WorldSceneKey } from './Scenes';
 import { Tilemap } from './Resources';
@@ -16,7 +16,8 @@ export const onBoot = (game: Game) => {
     game.currentScene.camera.y = player.pos.y;
     game.currentScene.camera.zoom = 2;
   });
-  game.currentScene.camera.strategy.elasticToActor(player, 0.8, 0.9);
+
+  zoomToActor(game, player);
 
   game.goToScene(WorldSceneKey);
   game.add(player);
@@ -48,6 +49,7 @@ export const onBoot = (game: Game) => {
         player.vel.x = -speed;
       }
     }
+    game.zoomToActor(player);
   };
   return;
 };

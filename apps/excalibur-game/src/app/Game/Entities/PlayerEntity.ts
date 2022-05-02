@@ -1,6 +1,6 @@
 import { Actor, CollisionType, Color, vec } from 'excalibur';
 
-import { PlayerTagComponent } from '../Components';
+import { NameComponent, PlayerTagComponent } from '../Components';
 import {
   BaseImageDownAnimation,
   BaseImageIdleDownAnimation,
@@ -14,21 +14,25 @@ type PlayerEntityProps = {
 export const PlayerEntity = ({ name }: PlayerEntityProps) => {
   const actor = new Actor({
     pos: vec(100, 100),
-    width: 32,
-    height: 48,
-    color: Color.Blue,
+    width: 8,
+    height: 8,
     collisionType: CollisionType.Active,
   });
   actor.addComponent(PlayerTagComponent);
+  actor.addComponent(new NameComponent('Mr', name, ''));
 
-  actor.graphics.layers.create({ name: 'base', order: -1 });
+  const baseLayer = actor.graphics.layers.create({
+    name: 'base',
+    order: 10,
+    offset: vec(0, -8),
+  });
   actor.graphics.add('move_down', BaseImageDownAnimation);
   actor.graphics.add('idle_down', BaseImageIdleDownAnimation);
   actor.graphics.add('move_up', BaseImageUpAnimation);
   actor.graphics.add('move_left', BaseImageLeftAnimation);
   actor.graphics.add('move_right', BaseImageLeftAnimation);
 
-  actor.graphics.layers.get('base').use('idle_down');
-  actor.graphics.use('idle_down');
+  baseLayer.use('idle_down');
+
   return actor;
 };

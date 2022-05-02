@@ -13,10 +13,8 @@ export class Game extends Engine {
       displayMode: DisplayMode.FillContainer,
       backgroundColor: Color.Black,
       canvasElement,
-      // sets the resolution
       pointerScope: Input.PointerScope.Canvas,
 
-      resolution: Resolution.GameBoy,
       antialiasing: false,
     });
 
@@ -27,10 +25,9 @@ export class Game extends Engine {
     });
   }
 
-  reset = () => {
+  reset() {
     this.stop();
-    this.currentScene.camera.clearAllStrategies();
-    this.currentScene.camera.zoom = 1;
+    resetCamera(this);
     this.currentScene.tileMaps.forEach((t) => {
       this.currentScene.remove(t);
     });
@@ -38,7 +35,11 @@ export class Game extends Engine {
       this.currentScene.remove(a);
     });
     this.start();
-  };
+  }
+
+  zoomToActor(actor: Actor) {
+    zoomToActor(this, actor);
+  }
 }
 
 type CreateGameProps = {
