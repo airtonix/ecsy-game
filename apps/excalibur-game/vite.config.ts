@@ -14,7 +14,7 @@ const config = defineConfig(() => {
       react(),
     ],
     root: './',
-
+    publicDir: './assets',
     css: {
       modules: {
         localsConvention: 'camelCaseOnly',

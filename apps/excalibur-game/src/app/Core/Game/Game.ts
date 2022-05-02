@@ -1,5 +1,11 @@
-import { Color, DisplayMode, Engine } from 'excalibur';
-import { Actor, Font, FontUnit, Label, Vector, vec } from 'excalibur';
+import {
+  Actor,
+  Color,
+  DisplayMode,
+  Engine,
+  Input,
+  Resolution,
+} from 'excalibur';
 
 export class Game extends Engine {
   constructor(public canvasElement: HTMLCanvasElement) {
@@ -7,8 +13,32 @@ export class Game extends Engine {
       displayMode: DisplayMode.FillContainer,
       backgroundColor: Color.Black,
       canvasElement,
+      // sets the resolution
+      pointerScope: Input.PointerScope.Canvas,
+
+      resolution: Resolution.GameBoy,
+      antialiasing: false,
+    });
+
+    this.input.keyboard.on('press', (evt) => {
+      if (evt.key === Input.Keys.D) {
+        this.toggleDebug();
+      }
     });
   }
+
+  reset = () => {
+    this.stop();
+    this.currentScene.camera.clearAllStrategies();
+    this.currentScene.camera.zoom = 1;
+    this.currentScene.tileMaps.forEach((t) => {
+      this.currentScene.remove(t);
+    });
+    this.currentScene.entities.forEach((a) => {
+      this.currentScene.remove(a);
+    });
+    this.start();
+  };
 }
 
 type CreateGameProps = {
