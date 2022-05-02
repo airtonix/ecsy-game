@@ -7,6 +7,7 @@ importers:
       '@babel/core': ~7.0.1
       '@babel/preset-env': ~7.0.0
       '@changesets/cli': ~2.14.1
+      '@excaliburjs/plugin-aseprite': 0.25.3
       '@excaliburjs/plugin-tiled': 0.25.3
       '@jscutlery/semver': ~2.23.2
       '@nrwl/cli': ~13.10.3
@@ -56,6 +57,7 @@ importers:
       '@babel/core': 7.0.1
       '@babel/preset-env': 7.0.0_@babel+core@7.0.1
       '@changesets/cli': 2.14.1
+      '@excaliburjs/plugin-aseprite': 0.25.3_excalibur@0.25.3
       '@excaliburjs/plugin-tiled': 0.25.3_excalibur@0.25.3
       '@jscutlery/semver': 2.23.2_typescript@4.6.3
       '@nrwl/cli': 13.10.3_typescript@4.6.3
@@ -1310,6 +1312,14 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@excaliburjs/plugin-aseprite/0.25.3_excalibur@0.25.3:
+    resolution: {integrity: sha512-Fq0fBMtTSfno6Gfbb8as6UtJHY5OPvj1JO03T1NRedk/CVOHZXT2gXituFckP27flLCNzaRPKWD3JnjH8y944w==}
+    peerDependencies:
+      excalibur: 0.25.3
+    dependencies:
+      excalibur: 0.25.3
     dev: false
 
   /@excaliburjs/plugin-tiled/0.25.3_excalibur@0.25.3:

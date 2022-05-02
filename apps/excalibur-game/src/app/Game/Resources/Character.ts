@@ -50,3 +50,10 @@ export const BaseImageLeftAnimation = Animation.fromSpriteSheet(
   200
 );
 BaseImageLeftAnimation.scale = vec(0.5, 0.5);
+export const BaseImageRightAnimation = Animation.fromSpriteSheet(
+  BaseImageSpriteSheet,
+  range(16, 24),
+  200
+);
+BaseImageRightAnimation.scale = vec(0.5, 0.5);
+BaseImageRightAnimation.flipHorizontal = true;

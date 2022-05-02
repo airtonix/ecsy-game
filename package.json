@@ -8,6 +8,7 @@
     "react-dom": "18.1.0",
     "excalibur": "0.25.3",
     "@excaliburjs/plugin-tiled": "0.25.3",
+    "@excaliburjs/plugin-aseprite": "0.25.3",
     "@babel/core": "~7.0.1",
     "@babel/preset-env": "~7.0.0",
     "@changesets/cli": "~2.14.1",
