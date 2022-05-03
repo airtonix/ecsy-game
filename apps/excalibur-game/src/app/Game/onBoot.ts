@@ -1,15 +1,22 @@
-import { Input } from 'excalibur';
-
 import { Game, zoomToActor } from '../Core/Game';
 
 import { WorldSceneKey } from './Scenes';
 import { Tilemap } from './Resources';
 import { PlayerEntity } from './Entities';
 import { prepareMap } from './prepareMap';
+import { RenderableAvatarSystem } from './Systems/RenderableSystem';
+import { PlayerInputSytem } from './Systems/PlayerInputSytem';
 export const onBoot = (game: Game) => {
-  const isIsometric = false;
-  const player = PlayerEntity({ name: 'player1' });
+  const player = PlayerEntity({ firstName: 'player1' });
   prepareMap({ player, game, map: Tilemap });
+
+  zoomToActor(game.currentScene, player);
+  game.goToScene(WorldSceneKey);
+  game.currentScene.world.systemManager.addSystem(new RenderableAvatarSystem());
+  game.currentScene.world.systemManager.addSystem(new PlayerInputSytem());
+
+  game.add(player);
+  Tilemap.addTiledMapToScene(game.currentScene);
 
   setTimeout(() => {
     game.currentScene.camera.x = player.pos.x;
@@ -17,39 +24,5 @@ export const onBoot = (game: Game) => {
     game.currentScene.camera.zoom = 2;
   });
 
-  zoomToActor(game, player);
-
-  game.goToScene(WorldSceneKey);
-  game.add(player);
-  Tilemap.addTiledMapToScene(game.currentScene);
-  player.onPostUpdate = () => {
-    player.vel.setTo(0, 0);
-    const speed = isIsometric ? 64 * 2 : 64;
-    if (game.input.keyboard.isHeld(Input.Keys.Right)) {
-      player.vel.x = speed;
-      if (isIsometric) {
-        player.vel.y = speed;
-      }
-    }
-    if (game.input.keyboard.isHeld(Input.Keys.Left)) {
-      player.vel.x = -speed;
-      if (isIsometric) {
-        player.vel.y = -speed;
-      }
-    }
-    if (game.input.keyboard.isHeld(Input.Keys.Up)) {
-      player.vel.y = -speed;
-      if (isIsometric) {
-        player.vel.x = speed;
-      }
-    }
-    if (game.input.keyboard.isHeld(Input.Keys.Down)) {
-      player.vel.y = speed;
-      if (isIsometric) {
-        player.vel.x = -speed;
-      }
-    }
-    game.zoomToActor(player);
-  };
   return;
 };

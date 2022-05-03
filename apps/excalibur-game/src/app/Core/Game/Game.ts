@@ -1,11 +1,4 @@
-import {
-  Actor,
-  Color,
-  DisplayMode,
-  Engine,
-  Input,
-  Resolution,
-} from 'excalibur';
+import { Actor, Color, DisplayMode, Engine, Input, Scene } from 'excalibur';
 
 export class Game extends Engine {
   constructor(public canvasElement: HTMLCanvasElement) {
@@ -38,7 +31,7 @@ export class Game extends Engine {
   }
 
   zoomToActor(actor: Actor) {
-    zoomToActor(this, actor);
+    zoomToActor(this.currentScene, actor);
   }
 }
 
@@ -50,9 +43,9 @@ export function createGame({ canvas }: CreateGameProps) {
   return game;
 }
 
-export function zoomToActor(game: Game, actor: Actor) {
-  game.currentScene.camera.strategy.elasticToActor(actor, 0.2, 0.2);
-  game.currentScene.camera.zoomOverTime(2, 200);
+export function zoomToActor(scene: Scene, actor: Actor) {
+  scene.camera.strategy.elasticToActor(actor, 0.2, 0.2);
+  scene.camera.zoomOverTime(2, 200);
 }
 
 export function resetCamera(game: Game) {
