@@ -1,0 +1,111 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "world.tmx",
+    "expandedProjectPaths": [
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels"
+    ],
+    "fileStates": {
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/Characters.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/Dungeon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelOne.tmx": {
+            "scale": 3,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 261.3333333333333,
+                "y": 166
+            }
+        },
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelOne.tmx#test": {
+            "scaleInDock": 1
+        },
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelThree.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 256,
+                "y": 256
+            }
+        },
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelTwo.tmx": {
+            "scale": 3,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 160,
+                "y": 160
+            }
+        },
+        "game.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 402,
+                "y": 267.99999999999994
+            }
+        },
+        "game.tmx#tiles_packed": {
+            "scaleInDock": 1
+        },
+        "snow-expansion.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tiles_packed.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "world.tmx": {
+            "scale": 3,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 676,
+                "y": 503.3333333333333
+            }
+        },
+        "world.tmx#snow-expansion": {
+            "scaleInDock": 1.5
+        },
+        "world.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "/home/zenobius/Projects/Mine/Github/ecsyjs/ecsy-game/apps/excalibur-game/assets",
+    "map.height": 64,
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 64,
+    "openFiles": [
+        "world.tmx"
+    ],
+    "project": "game.tiled-project",
+    "property.type": "float",
+    "recentFiles": [
+        "world.tmx",
+        "snow-expansion.tsx",
+        "tiles_packed.tsx",
+        "world.tsx",
+        "game.tmx",
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelTwo.tmx",
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelThree.tmx",
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/LevelOne.tmx",
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/Dungeon.tsx",
+        "/home/zenobius/Projects/Mine/Github/scp-rpg/apps/game-desktop/public/assets/levels/Characters.tsx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

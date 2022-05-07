@@ -1,4 +1,5 @@
 export { NameComponent } from './NameComponent';
 export { PlayerTagComponent } from './PlayerTagComponent';
-export { CharacterAvatarComponent } from './CharacterAvatarComponent';
+export { CharacterRenderIdleComponent } from './CharacterRenderIdleComponent';
+export { CharacterRenderMovementComponent } from './CharacterRenderMovementComponent';
 export { CharacterInputComponent } from './CharacterInputComponent';

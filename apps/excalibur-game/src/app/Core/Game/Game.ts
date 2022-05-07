@@ -1,4 +1,14 @@
-import { Actor, Color, DisplayMode, Engine, Input, Scene } from 'excalibur';
+import { TiledMapResource } from '@excaliburjs/plugin-tiled';
+import {
+  Actor,
+  Color,
+  DisplayMode,
+  Engine,
+  Input,
+  Scene,
+  Vector,
+  vec,
+} from 'excalibur';
 
 export class Game extends Engine {
   constructor(public canvasElement: HTMLCanvasElement) {
@@ -7,8 +17,8 @@ export class Game extends Engine {
       backgroundColor: Color.Black,
       canvasElement,
       pointerScope: Input.PointerScope.Canvas,
-
       antialiasing: false,
+      snapToPixel: true,
     });
 
     this.input.keyboard.on('press', (evt) => {
@@ -48,9 +58,26 @@ export function zoomToActor(scene: Scene, actor: Actor) {
   scene.camera.zoomOverTime(2, 200);
 }
 
+type GetMapStartProps = {
+  map: TiledMapResource;
+};
+export function getMapStart({ map }: GetMapStartProps) {
+  const objects = map.data.getExcaliburObjects();
+  if (!objects.length)
+    throw new Error('map is missing a "player-start" object.');
+  const start = objects[0].getObjectByName('player-start');
+  return vec(start?.x || 0, start?.y || 0);
+}
+
+export function placeActor(actor: Actor, position: Vector, zIndex?: number) {
+  actor.pos.x = position.x;
+  actor.pos.y = position.y;
+  actor.z = zIndex || 1;
+}
+
 export function resetCamera(game: Game) {
   game.currentScene.camera.clearAllStrategies();
   game.currentScene.camera.x = game.drawWidth;
   game.currentScene.camera.y = game.drawHeight;
-  game.currentScene.camera.zoomOverTime(1, 200);
+  game.currentScene.camera.zoomOverTime(2, 200);
 }

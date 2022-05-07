@@ -1,14 +1,17 @@
-import { Actor, CollisionType, vec } from 'excalibur';
+import { Actor, CollisionType, Vector } from 'excalibur';
 
 import {
-  CharacterAvatarComponent,
   CharacterInputComponent,
+  CharacterRenderMovementComponent,
   NameComponent,
   PlayerTagComponent,
 } from '../Components';
 import {
   BaseImageDownAnimation,
   BaseImageIdleDownAnimation,
+  BaseImageIdleLeftAnimation,
+  BaseImageIdleRightAnimation,
+  BaseImageIdleUpAnimation,
   BaseImageLeftAnimation,
   BaseImageRightAnimation,
   BaseImageUpAnimation,
@@ -17,14 +20,17 @@ import {
 /**
  * As more Data Components  are used, join their initialising props here
  */
-type PlayerEntityProps = ConstructorParameters<typeof NameComponent>['0'];
+type PlayerEntityProps = ConstructorParameters<typeof NameComponent>['0'] & {
+  position: Vector;
+};
 export const PlayerEntity = ({
+  position,
   salutation,
   firstName,
   lastName,
 }: PlayerEntityProps) => {
   const actor = new Actor({
-    pos: vec(100, 100),
+    pos: position,
     width: 8,
     height: 8,
     collisionType: CollisionType.Active,
@@ -40,9 +46,11 @@ export const PlayerEntity = ({
       })
     )
     .addComponent(
-      new CharacterAvatarComponent(
-        // TODO: move these to constructor params
+      new CharacterRenderMovementComponent(
+        BaseImageIdleUpAnimation,
         BaseImageIdleDownAnimation,
+        BaseImageIdleLeftAnimation,
+        BaseImageIdleRightAnimation,
         BaseImageUpAnimation,
         BaseImageDownAnimation,
         BaseImageLeftAnimation,

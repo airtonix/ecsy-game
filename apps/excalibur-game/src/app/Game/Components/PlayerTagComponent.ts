@@ -1,7 +1,7 @@
 import { TagComponent } from 'excalibur';
 
-export class PlayerTagComponent extends TagComponent<'player'> {
+export class PlayerTagComponent extends TagComponent<'game.player'> {
   constructor() {
-    super('player');
+    super('game.player');
   }
 }

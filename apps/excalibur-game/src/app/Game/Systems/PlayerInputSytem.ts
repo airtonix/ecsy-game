@@ -16,7 +16,7 @@ export class PlayerInputSytem extends System<
   PlayerTagComponent | BodyComponent
 > {
   systemType: SystemType = SystemType.Update;
-  types = ['player', 'ex.body'] as const;
+  types = ['game.player', 'ex.body'] as const;
 
   scene!: Scene;
   initialize(scene: Scene) {

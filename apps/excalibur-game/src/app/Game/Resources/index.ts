@@ -1,2 +1,5 @@
-export { Tilemap } from './Tilemap';
-export { Loader } from './Loader';
+export {
+  WorldTilemap,
+  KenyyRougeLikePack,
+  KenyyRougeLikeTilemap,
+} from './Tilemap';
