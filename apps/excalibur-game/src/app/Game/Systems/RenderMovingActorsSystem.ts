@@ -52,10 +52,10 @@ export class RenderMovingActorsSystem extends System<
       if (!body || !graphics || !renderMovement) return;
 
       const direction = [
-        body.vel.x > 0 && 'left',
-        body.vel.x < 0 && 'right',
-        body.vel.y < 0 && 'up',
         body.vel.y > 0 && 'down',
+        body.vel.x < 0 && 'left',
+        body.vel.x > 0 && 'right',
+        body.vel.y < 0 && 'up',
       ].filter(Boolean);
 
       if (direction.includes('left')) {

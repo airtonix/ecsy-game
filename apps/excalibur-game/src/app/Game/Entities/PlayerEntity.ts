@@ -6,16 +6,7 @@ import {
   NameComponent,
   PlayerTagComponent,
 } from '../Components';
-import {
-  BaseImageDownAnimation,
-  BaseImageIdleDownAnimation,
-  BaseImageIdleLeftAnimation,
-  BaseImageIdleRightAnimation,
-  BaseImageIdleUpAnimation,
-  BaseImageLeftAnimation,
-  BaseImageRightAnimation,
-  BaseImageUpAnimation,
-} from '../Resources/Character';
+import { SallyCharactorAnimations } from '../Resources';
 
 /**
  * As more Data Components  are used, join their initialising props here
@@ -47,14 +38,14 @@ export const PlayerEntity = ({
     )
     .addComponent(
       new CharacterRenderMovementComponent(
-        BaseImageIdleUpAnimation,
-        BaseImageIdleDownAnimation,
-        BaseImageIdleLeftAnimation,
-        BaseImageIdleRightAnimation,
-        BaseImageUpAnimation,
-        BaseImageDownAnimation,
-        BaseImageLeftAnimation,
-        BaseImageRightAnimation
+        SallyCharactorAnimations.idle_up,
+        SallyCharactorAnimations.idle_down,
+        SallyCharactorAnimations.idle_left,
+        SallyCharactorAnimations.idle_right,
+        SallyCharactorAnimations.move_up,
+        SallyCharactorAnimations.move_down,
+        SallyCharactorAnimations.move_left,
+        SallyCharactorAnimations.move_right
       )
     )
     .addComponent(new CharacterInputComponent());
