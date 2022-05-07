@@ -1,7 +1,6 @@
 import {
   Actor,
   BodyComponent,
-  Engine,
   Entity,
   Input,
   Scene,
@@ -12,7 +11,7 @@ import {
 import { zoomToActor } from '../../Core/Game';
 import { PlayerTagComponent } from '../Components';
 
-export class PlayerInputSytem extends System<
+export class PlayerControlSystem extends System<
   PlayerTagComponent | BodyComponent
 > {
   systemType: SystemType = SystemType.Update;
@@ -44,7 +43,6 @@ export class PlayerInputSytem extends System<
       if (game.input.keyboard.isHeld(Input.Keys.Down)) {
         body.vel.y = speed;
       }
-      zoomToActor(game.currentScene, entity);
     });
   }
 }

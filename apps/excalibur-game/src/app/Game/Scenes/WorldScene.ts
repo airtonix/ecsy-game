@@ -1,22 +1,30 @@
-import { Scene } from 'excalibur';
+import { Scene, vec } from 'excalibur';
 
-import { zoomToActor } from '../../Core/Game';
-import { getMapStart, placeActor } from '../../Core/Game/Game';
-import { PlayerEntity } from '../Entities';
+import { Game, getMapStart, placeActor, zoomToActor } from '../../Core/Game';
+import { NpcEntity, PlayerEntity } from '../Entities';
 import { WorldTilemap } from '../Resources';
 import {
-  PlayerInputSytem,
+  CameraFocusSystem,
+  PlayerControlSystem,
+  RandomControlSystem,
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
 
 export class WorldScene extends Scene {
   player!: ReturnType<typeof PlayerEntity>;
+  npcs!: ReturnType<typeof NpcEntity>[];
+
+  constructor(public game: Game) {
+    super();
+  }
 
   public onActivate() {
+    this.world.systemManager.addSystem(new PlayerControlSystem());
+    this.world.systemManager.addSystem(new RandomControlSystem());
     this.world.systemManager.addSystem(new RenderIdleActorsSystem());
-    this.world.systemManager.addSystem(new PlayerInputSytem());
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
+    this.world.systemManager.addSystem(new CameraFocusSystem());
 
     WorldTilemap.addTiledMapToScene(this);
     const actorLayer = WorldTilemap.data.getObjectLayerByName('Actors');
@@ -28,7 +36,13 @@ export class WorldScene extends Scene {
 
     const start = getMapStart({ map: WorldTilemap });
     this.player = PlayerEntity({ firstName: 'Player1', position: start });
+    this.npcs = [NpcEntity({ firstName: 'Mark', position: start })];
+
     this.add(this.player);
+    this.npcs.forEach((npc) => {
+      this.add(npc);
+      placeActor(npc, vec(start.x + 20, start.y + 20), actorZindex?.value || 1);
+    });
     placeActor(this.player, start, actorZindex?.value || 1);
     zoomToActor(this, this.player);
   }

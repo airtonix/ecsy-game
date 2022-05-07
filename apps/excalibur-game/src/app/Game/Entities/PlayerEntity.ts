@@ -1,6 +1,7 @@
 import { Actor, CollisionType, Vector } from 'excalibur';
 
 import {
+  CameraFocusedTagComponent,
   CharacterInputComponent,
   CharacterRenderMovementComponent,
   NameComponent,
@@ -22,6 +23,7 @@ export const PlayerEntity = ({
 }: PlayerEntityProps) => {
   const character = MarkCharactorAnimations;
   const actor = new Actor({
+    name: 'player',
     pos: position,
     width: 8,
     height: 8,
@@ -30,6 +32,7 @@ export const PlayerEntity = ({
 
   actor
     .addComponent(new PlayerTagComponent())
+    .addComponent(new CameraFocusedTagComponent())
     .addComponent(
       new NameComponent({
         salutation,

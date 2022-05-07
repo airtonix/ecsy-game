@@ -7,6 +7,7 @@ importers:
       '@babel/core': ~7.0.1
       '@babel/preset-env': ~7.0.0
       '@changesets/cli': ~2.14.1
+      '@excaliburjs/dev-tools': 0.25.3
       '@excaliburjs/plugin-aseprite': 0.25.3
       '@excaliburjs/plugin-tiled': 0.25.3
       '@jscutlery/semver': ~2.23.2
@@ -57,6 +58,7 @@ importers:
       '@babel/core': 7.0.1
       '@babel/preset-env': 7.0.0_@babel+core@7.0.1
       '@changesets/cli': 2.14.1
+      '@excaliburjs/dev-tools': 0.25.3_excalibur@0.25.3
       '@excaliburjs/plugin-aseprite': 0.25.3_excalibur@0.25.3
       '@excaliburjs/plugin-tiled': 0.25.3_excalibur@0.25.3
       '@jscutlery/semver': 2.23.2_typescript@4.6.3
@@ -1314,6 +1316,16 @@ packages:
       - supports-color
     dev: false
 
+  /@excaliburjs/dev-tools/0.25.3_excalibur@0.25.3:
+    resolution: {integrity: sha512-mrOzbW2cQbp9F6dj0K+BtfNhdcBeF3i9uupdnR9hn6bHK0KXSzRrZJJukqcE//vXa7vUXZ4AdC7FgJQWB4IC5A==}
+    peerDependencies:
+      excalibur: 0.25.3
+    dependencies:
+      '@tweakpane/core': 1.0.8
+      excalibur: 0.25.3
+      tweakpane: 3.0.7
+    dev: false
+
   /@excaliburjs/plugin-aseprite/0.25.3_excalibur@0.25.3:
     resolution: {integrity: sha512-Fq0fBMtTSfno6Gfbb8as6UtJHY5OPvj1JO03T1NRedk/CVOHZXT2gXituFckP27flLCNzaRPKWD3JnjH8y944w==}
     peerDependencies:
@@ -2346,6 +2358,10 @@ packages:
       '@nrwl/workspace': '>=13.0.0'
     dependencies:
       '@nrwl/workspace': 13.10.3_6caa5b054b7df29d7e2920e61a6f492d
+    dev: false
+
+  /@tweakpane/core/1.0.8:
+    resolution: {integrity: sha512-q7BQrqM4NYiaSoErRgRY0EBxxC8AzsZJoz52K8SNJ/IfYu9lTzfFTwW7ouYqgElSOx+3ybXBcMlkCPZdOBZg6Q==}
     dev: false
 
   /@types/babel__core/7.1.19:
@@ -8758,6 +8774,10 @@ packages:
       strip-ansi: 6.0.1
       wcwidth: 1.0.1
       yargs: 15.4.1
+    dev: false
+
+  /tweakpane/3.0.7:
+    resolution: {integrity: sha512-rgxqoo6T10atYoKHVif6aYlAMIAlHJ84hi5LXqi6ZgVEPcmnzPI34C88y6HquarBY0ZKE/ZCXVaZm8NibhQRtA==}
     dev: false
 
   /type-check/0.3.2:
