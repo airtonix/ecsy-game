@@ -3,4 +3,14 @@ export {
   KenyyRougeLikePack,
   KenyyRougeLikeTilemap,
 } from './Tilemap';
-export { HcHumans1AImage, SallyCharactorAnimations } from './Humans';
+export {
+  HcHumans1AImage,
+  KarenCharactorAnimations,
+  SallyCharactorAnimations,
+  JaneCharactorAnimations,
+  MelCharactorAnimations,
+  SamCharactorAnimations,
+  JohnCharactorAnimations,
+  KevinCharactorAnimations,
+  MarkCharactorAnimations,
+} from './Humans';

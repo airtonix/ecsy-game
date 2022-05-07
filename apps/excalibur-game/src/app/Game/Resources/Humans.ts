@@ -54,46 +54,58 @@ function createAnimation({
   return animation;
 }
 
-export const SallyCharactorAnimations: MoveableActorAnimationMap = {
-  idle_down: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [1],
-    interval: 200,
-  }),
-  idle_left: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [13],
-    interval: 200,
-  }),
-  idle_right: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [25],
-    interval: 200,
-  }),
-  idle_up: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [37],
-    interval: 200,
-  }),
+function createHumansAnimationSet(start = 1): MoveableActorAnimationMap {
+  return {
+    idle_down: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 1],
+      interval: 200,
+    }),
+    idle_left: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 13],
+      interval: 200,
+    }),
+    idle_right: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 25],
+      interval: 200,
+    }),
+    idle_up: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 37],
+      interval: 200,
+    }),
 
-  move_down: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [0, 1, 2],
-    interval: 200,
-  }),
-  move_left: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [12, 13, 14],
-    interval: 200,
-  }),
-  move_right: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [24, 25, 26],
-    interval: 200,
-  }),
-  move_up: createAnimation({
-    sheet: HcHumans1AImageSpriteSheet,
-    frames: [36, 37, 38],
-    interval: 200,
-  }),
-};
+    move_down: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start, start + 1, start + 2],
+      interval: 200,
+    }),
+    move_left: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 12, start + 13, start + 14],
+      interval: 200,
+    }),
+    move_right: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 24, start + 25, start + 26],
+      interval: 200,
+    }),
+    move_up: createAnimation({
+      sheet: HcHumans1AImageSpriteSheet,
+      frames: [start + 36, start + 37, start + 38],
+      interval: 200,
+    }),
+  };
+}
+
+export const SallyCharactorAnimations = createHumansAnimationSet(0);
+export const KarenCharactorAnimations = createHumansAnimationSet(3);
+export const JaneCharactorAnimations = createHumansAnimationSet(6);
+export const MelCharactorAnimations = createHumansAnimationSet(9);
+
+export const SamCharactorAnimations = createHumansAnimationSet(48);
+export const KevinCharactorAnimations = createHumansAnimationSet(51);
+export const JohnCharactorAnimations = createHumansAnimationSet(54);
+export const MarkCharactorAnimations = createHumansAnimationSet(57);

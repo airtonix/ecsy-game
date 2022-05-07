@@ -6,7 +6,7 @@ import {
   NameComponent,
   PlayerTagComponent,
 } from '../Components';
-import { SallyCharactorAnimations } from '../Resources';
+import { MarkCharactorAnimations } from '../Resources';
 
 /**
  * As more Data Components  are used, join their initialising props here
@@ -20,6 +20,7 @@ export const PlayerEntity = ({
   firstName,
   lastName,
 }: PlayerEntityProps) => {
+  const character = MarkCharactorAnimations;
   const actor = new Actor({
     pos: position,
     width: 8,
@@ -38,14 +39,14 @@ export const PlayerEntity = ({
     )
     .addComponent(
       new CharacterRenderMovementComponent(
-        SallyCharactorAnimations.idle_up,
-        SallyCharactorAnimations.idle_down,
-        SallyCharactorAnimations.idle_left,
-        SallyCharactorAnimations.idle_right,
-        SallyCharactorAnimations.move_up,
-        SallyCharactorAnimations.move_down,
-        SallyCharactorAnimations.move_left,
-        SallyCharactorAnimations.move_right
+        character.idle_up,
+        character.idle_down,
+        character.idle_left,
+        character.idle_right,
+        character.move_up,
+        character.move_down,
+        character.move_left,
+        character.move_right
       )
     )
     .addComponent(new CharacterInputComponent());
