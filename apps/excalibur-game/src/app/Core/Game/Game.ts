@@ -64,12 +64,11 @@ export function zoomToActor(scene: Scene, actor: Actor) {
 
 type GetMapStartProps = {
   map: TiledMapResource;
+  name: string;
 };
-export function getMapStart({ map }: GetMapStartProps) {
+export function getMapStart({ map, name }: GetMapStartProps) {
   const objects = map.data.getExcaliburObjects();
-  if (!objects.length)
-    throw new Error('map is missing a "player-start" object.');
-  const start = objects[0].getObjectByName('player-start');
+  const start = objects[0].getObjectByName(name);
   return vec(start?.x || 0, start?.y || 0);
 }
 

@@ -63,23 +63,23 @@ export class RandomControlSystem extends System<
       if (isComplete) {
         motion.vel.setTo(0, 0);
         movement.destination = undefined;
-        movement.cooldown = Date.now() + 2000;
+        movement.cooldown = Date.now() + this.scene.game.seed.integer(0, 10000);
       }
     } else if (
       !movement.destination &&
       (!movement.cooldown || movement.cooldown < Date.now())
     ) {
-      const modifier = vec(
-        this.scene.game.seed.integer(bounds.topleft.x, bounds.bottomright.x) /
-          8,
-        this.scene.game.seed.integer(bounds.topleft.y, bounds.bottomright.y) / 8
-      );
-      const target = modifier.add(transform.pos);
+      /**
+       * Pick a new destination
+       */
+      const target = vec(
+        this.scene.game.seed.integer(bounds.topleft.x, bounds.bottomright.x),
+        this.scene.game.seed.integer(bounds.topleft.y, bounds.bottomright.y)
+      )
+        .sub(transform.pos)
+        .scale(0.1);
 
-      movement.destination = vec(
-        target.x < 0 ? 0 : Math.max(target.x, bounds.bottomright.x),
-        target.y < 0 ? 0 : Math.max(target.y, bounds.bottomright.y)
-      );
+      movement.destination = transform.pos.add(target);
     }
   }
 

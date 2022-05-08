@@ -34,16 +34,24 @@ export class WorldScene extends Scene {
       tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
     });
 
-    const start = getMapStart({ map: WorldTilemap });
-    this.player = PlayerEntity({ firstName: 'Player1', position: start });
-    this.npcs = [NpcEntity({ firstName: 'Mark', position: start })];
+    const playerStart = getMapStart({
+      map: WorldTilemap,
+      name: 'player-start',
+    });
+    const npcStart = getMapStart({ map: WorldTilemap, name: 'npc-start' });
+    this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
+    this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
 
     this.add(this.player);
     this.npcs.forEach((npc) => {
       this.add(npc);
-      placeActor(npc, vec(start.x + 20, start.y + 20), actorZindex?.value || 1);
+      placeActor(
+        npc,
+        vec(npcStart.x + 20, npcStart.y + 20),
+        actorZindex?.value || 1
+      );
     });
-    placeActor(this.player, start, actorZindex?.value || 1);
+    placeActor(this.player, playerStart, actorZindex?.value || 1);
     zoomToActor(this, this.player);
   }
 }
