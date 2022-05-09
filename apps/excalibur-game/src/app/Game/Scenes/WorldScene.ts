@@ -1,5 +1,7 @@
 import { Scene, vec } from 'excalibur';
 
+import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
+
 import { Game, getMapStart, placeActor, zoomToActor } from '../../Core/Game';
 import { NpcEntity, PlayerEntity } from '../Entities';
 import { WorldTilemap } from '../Resources';
@@ -10,6 +12,7 @@ import {
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
+import { GeneralBehaviourBlackBoard } from '../Behaviours';
 
 export class WorldScene extends Scene {
   player!: ReturnType<typeof PlayerEntity>;
@@ -25,6 +28,9 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(new RenderIdleActorsSystem());
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
     this.world.systemManager.addSystem(new CameraFocusSystem());
+    this.world.systemManager.addSystem(
+      new BehaviourTreeSystem(GeneralBehaviourBlackBoard)
+    );
 
     WorldTilemap.addTiledMapToScene(this);
     const actorLayer = WorldTilemap.data.getObjectLayerByName('Actors');

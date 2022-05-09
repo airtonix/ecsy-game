@@ -1,5 +1,7 @@
 import { Actor, CollisionType, Vector } from 'excalibur';
 
+import { BehaviourTreeComponent } from '@ecsygame/behaviour-tree';
+
 import {
   CharacterRenderMovementComponent,
   NameComponent,
@@ -55,6 +57,12 @@ export const NpcEntity = ({
     height: 8,
     collisionType: CollisionType.Active,
   });
+  const behaviour = `root {
+    sequence while(IsWandering) {
+      action [Whistle]
+      wait [5000]
+    }
+  }`;
 
   actor
     .addComponent(new NpcTagComponent())
@@ -77,6 +85,7 @@ export const NpcEntity = ({
         character.move_right
       )
     )
-    .addComponent(new RandomMovementComponent(64));
+    .addComponent(new RandomMovementComponent(64))
+    .addComponent(new BehaviourTreeComponent(behaviour));
   return actor;
 };

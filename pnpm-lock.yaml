@@ -21,6 +21,7 @@ importers:
       '@nrwl/workspace': ~13.10.3
       '@nxext/vite': ^13.2.5
       '@trumbitta/nx-plugin-unused-deps': ~1.10.0
+      '@types/debug': 4.1.7
       '@types/jest': ~27.0.2
       '@types/node': ~16.11.7
       '@types/react': 18.0.8
@@ -29,6 +30,7 @@ importers:
       '@typescript-eslint/parser': ~5.18.0
       '@vitejs/plugin-react': 1.3.1
       babel-loader: ~8.0.2
+      debug: 4.3.4
       ecstra: 0.0.2
       eslint: ~8.12.0
       eslint-config-prettier: ~8.1.0
@@ -38,6 +40,7 @@ importers:
       husky: ~6.0.0
       jest: ~27.2.3
       lint-staged: ~10.5.4
+      mistreevous: 2.2.0
       nx: ~13.10.3
       prettier: ~2.5.1
       prettier-eslint: ~14.0.1
@@ -49,7 +52,7 @@ importers:
       tslib: ~2.0.0
       typescript: ~4.6.2
       typescript-plugin-css-modules: 3.4.0
-      vite: ~2.9.5
+      vite: ^2.9.5
       vite-plugin-eslint: ~1.3.0
       vite-tsconfig-paths: ~3.4.1
       webpack: ~5.0.0
@@ -67,11 +70,12 @@ importers:
       '@nrwl/jest': 13.10.3_typescript@4.6.3
       '@nrwl/js': 13.10.3_6caa5b054b7df29d7e2920e61a6f492d
       '@nrwl/linter': 13.10.3_eslint@8.12.0+typescript@4.6.3
-      '@nrwl/nx-cloud': 14.0.3
+      '@nrwl/nx-cloud': 14.0.3_debug@4.3.4
       '@nrwl/storybook': 14.0.3_1d32ee2098372232092f817452dd15e0
       '@nrwl/workspace': 13.10.3_6caa5b054b7df29d7e2920e61a6f492d
       '@nxext/vite': 13.2.5_1060419b2bfc799645dba21e222fe598
       '@trumbitta/nx-plugin-unused-deps': 1.10.0_@nrwl+workspace@13.10.3
+      '@types/debug': 4.1.7
       '@types/jest': 27.0.2
       '@types/node': 16.11.7
       '@types/react': 18.0.8
@@ -80,6 +84,7 @@ importers:
       '@typescript-eslint/parser': 5.18.0_eslint@8.12.0+typescript@4.6.3
       '@vitejs/plugin-react': 1.3.1
       babel-loader: 8.0.6_@babel+core@7.0.1+webpack@5.0.0
+      debug: 4.3.4
       ecstra: 0.0.2
       eslint: 8.12.0
       eslint-config-prettier: 8.1.0_eslint@8.12.0
@@ -89,6 +94,7 @@ importers:
       husky: 6.0.0
       jest: 27.2.3
       lint-staged: 10.5.4
+      mistreevous: 2.2.0
       nx: 13.10.3_typescript@4.6.3
       prettier: 2.5.1
       prettier-eslint: 14.0.2
@@ -1973,11 +1979,11 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@nrwl/nx-cloud/14.0.3:
+  /@nrwl/nx-cloud/14.0.3_debug@4.3.4:
     resolution: {integrity: sha512-08t9vnRzA5SAkG6gp+NrAGauraepHH0v4IByO4NQ+7JJ7JMWw0nt6fp/70wofRmem7MGQ+Y/AIgIc5T0m89k+w==}
     hasBin: true
     dependencies:
-      axios: 0.21.4
+      axios: 0.21.4_debug@4.3.4
       chalk: 4.1.0
       node-machine-id: 1.1.12
       strip-json-comments: 3.1.1
@@ -2393,6 +2399,12 @@ packages:
       '@babel/types': 7.17.0
     dev: false
 
+  /@types/debug/4.1.7:
+    resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
+    dependencies:
+      '@types/ms': 0.7.31
+    dev: false
+
   /@types/eslint-scope/3.7.3:
     resolution: {integrity: sha512-PB3ldyrcnAicT35TWPs5IcwKD8S333HMaa2VVv4+wdvebJkjWuW/xESoB8IwRcog8HYVYamb1g/R31Qv5Bx03g==}
     dependencies:
@@ -2458,6 +2470,10 @@ packages:
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
+    dev: false
+
+  /@types/ms/0.7.31:
+    resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
   /@types/node/12.20.50:
@@ -3043,10 +3059,10 @@ packages:
     hasBin: true
     dev: false
 
-  /axios/0.21.4:
+  /axios/0.21.4_debug@4.3.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.9
+      follow-redirects: 1.14.9_debug@4.3.4
     transitivePeerDependencies:
       - debug
     dev: false
@@ -4896,7 +4912,7 @@ packages:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
     dev: false
 
-  /follow-redirects/1.14.9:
+  /follow-redirects/1.14.9_debug@4.3.4:
     resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -4904,6 +4920,8 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dependencies:
+      debug: 4.3.4
     dev: false
 
   /fork-ts-checker-webpack-plugin/6.2.10:
@@ -6910,6 +6928,10 @@ packages:
     dependencies:
       minipass: 3.1.6
       yallist: 4.0.0
+    dev: false
+
+  /mistreevous/2.2.0:
+    resolution: {integrity: sha512-9Y8H9ljTTkaYXcaAJ60mTwFpvCAfDhxnLRQEcuhoQ8S/GbI1L7DKo3HEaJMPsnqyUGaAG+SYIV5AnRBgTb4Y+w==}
     dev: false
 
   /mixme/0.5.4:

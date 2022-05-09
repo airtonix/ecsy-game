@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "behaviour-tree": "packages/behaviour-tree",
     "ecstra-game": "apps/ecstra-game",
     "excalibur-game": "apps/excalibur-game"
   }
