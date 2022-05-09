@@ -1,0 +1,23 @@
+{
+  "root": "packages/behaviour-tree-visualiser",
+  "sourceRoot": "packages/behaviour-tree-visualiser/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/behaviour-tree-visualiser/**/*.{ts,js}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/behaviour-tree-visualiser"],
+      "options": {
+        "jestConfig": "packages/behaviour-tree-visualiser/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
