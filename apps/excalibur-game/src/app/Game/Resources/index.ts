@@ -13,4 +13,5 @@ export {
   JohnCharactorAnimations,
   KevinCharactorAnimations,
   MarkCharactorAnimations,
+  getRandomHumanAnimation,
 } from './Humans';

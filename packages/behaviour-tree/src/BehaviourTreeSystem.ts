@@ -5,7 +5,7 @@ import {
   System,
   SystemType,
 } from 'excalibur';
-import { BehaviourTree, State } from 'mistreevous';
+import { BehaviourTree } from 'mistreevous';
 
 import { BehaviourTreeComponent } from './BehaviourTreeComponent';
 import { BehaviourTreeBlackBoard } from './types';
@@ -40,7 +40,8 @@ export class BehaviourTreeSystem extends System<BehaviourTreeComponent> {
       get(target, prop) {
         if (!(prop in target)) return;
         const item = target[prop];
-        const output = typeof item === 'function' ? item.bind(data) : item;
+        const output =
+          typeof item === 'function' ? item.bind(null, data) : item;
         return output;
       },
     });

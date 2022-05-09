@@ -8,34 +8,7 @@ import {
   NpcTagComponent,
   RandomMovementComponent,
 } from '../Components';
-import {
-  JaneCharactorAnimations,
-  JohnCharactorAnimations,
-  KarenCharactorAnimations,
-  KevinCharactorAnimations,
-  MarkCharactorAnimations,
-  MelCharactorAnimations,
-  SallyCharactorAnimations,
-  SamCharactorAnimations,
-} from '../Resources';
-
-const CHARACTER_ANIMATIONS = [
-  JaneCharactorAnimations,
-  JohnCharactorAnimations,
-  KarenCharactorAnimations,
-  KevinCharactorAnimations,
-  MarkCharactorAnimations,
-  MelCharactorAnimations,
-  SallyCharactorAnimations,
-  SamCharactorAnimations,
-];
-
-function pickCharacter() {
-  const max = CHARACTER_ANIMATIONS.length;
-  const min = 0;
-  const index = Math.floor(Math.random() * (max - min) + min);
-  return CHARACTER_ANIMATIONS[index];
-}
+import { getRandomHumanAnimation } from '../Resources';
 
 /**
  * As more Data Components  are used, join their initialising props here
@@ -46,10 +19,9 @@ type NpcEntityProps = ConstructorParameters<typeof NameComponent>['0'] & {
 export const NpcEntity = ({
   position,
   salutation,
-  firstName,
   lastName,
 }: NpcEntityProps) => {
-  const character = pickCharacter();
+  const [name, animations] = getRandomHumanAnimation();
   const actor = new Actor({
     name: 'npc',
     pos: position,
@@ -57,35 +29,36 @@ export const NpcEntity = ({
     height: 8,
     collisionType: CollisionType.Active,
   });
-  const behaviour = `root {
-    sequence while(IsWandering) {
-      action [Whistle]
-      wait [5000]
-    }
-  }`;
 
   actor
     .addComponent(new NpcTagComponent())
     .addComponent(
       new NameComponent({
         salutation,
-        firstName,
+        firstName: name,
         lastName,
       })
     )
     .addComponent(
       new CharacterRenderMovementComponent(
-        character.idle_up,
-        character.idle_down,
-        character.idle_left,
-        character.idle_right,
-        character.move_up,
-        character.move_down,
-        character.move_left,
-        character.move_right
+        animations.idle_up,
+        animations.idle_down,
+        animations.idle_left,
+        animations.idle_right,
+        animations.move_up,
+        animations.move_down,
+        animations.move_left,
+        animations.move_right
       )
     )
     .addComponent(new RandomMovementComponent(64))
-    .addComponent(new BehaviourTreeComponent(behaviour));
+    .addComponent(
+      new BehaviourTreeComponent(`root {
+      sequence while(IsWandering) {
+        action [Whistle]
+        wait [5000]
+      }
+    }`)
+    );
   return actor;
 };

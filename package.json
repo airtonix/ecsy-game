@@ -1,6 +1,7 @@
 {
   "name": "ecsy-game",
   "version": "0.0.0",
+  "devDependencies": {},
   "dependencies": {
     "@types/debug": "4.1.7",
     "@babel/core": "~7.0.1",

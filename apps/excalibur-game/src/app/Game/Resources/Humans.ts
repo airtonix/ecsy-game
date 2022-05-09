@@ -109,3 +109,22 @@ export const SamCharactorAnimations = createHumansAnimationSet(48);
 export const KevinCharactorAnimations = createHumansAnimationSet(51);
 export const JohnCharactorAnimations = createHumansAnimationSet(54);
 export const MarkCharactorAnimations = createHumansAnimationSet(57);
+
+export const CHARACTER_ANIMATIONS = {
+  Jane: JaneCharactorAnimations,
+  John: JohnCharactorAnimations,
+  Karen: KarenCharactorAnimations,
+  Kevin: KevinCharactorAnimations,
+  Mark: MarkCharactorAnimations,
+  Mel: MelCharactorAnimations,
+  Sally: SallyCharactorAnimations,
+  Sam: SamCharactorAnimations,
+};
+
+export function getRandomHumanAnimation() {
+  const items = Object.entries(CHARACTER_ANIMATIONS);
+  const max = items.length;
+  const min = 0;
+  const index = Math.floor(Math.random() * (max - min) + min);
+  return items[index];
+}
