@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ecsygame/behaviour-tree": ["packages/behaviour-tree/src/index.ts"]
+      "@ecsygame/behaviour-tree": ["packages/behaviour-tree/src/index.ts"],
+      "@ecsygame/behaviour-tree-visualiser": [
+        "packages/behaviour-tree-visualiser/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

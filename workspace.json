@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "behaviour-tree": "packages/behaviour-tree",
+    "behaviour-tree-visualiser": "packages/behaviour-tree-visualiser",
     "ecstra-game": "apps/ecstra-game",
     "excalibur-game": "apps/excalibur-game"
   }
