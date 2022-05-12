@@ -7,3 +7,4 @@ export {
   Game,
 } from './Game';
 export { useGame } from './useGame';
+export { seed } from './Seed';

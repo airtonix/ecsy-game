@@ -4,9 +4,9 @@ import { BehaviourTreeComponent } from '@ecsygame/behaviour-tree';
 
 import {
   CharacterRenderMovementComponent,
+  MovementToTargetComponent,
   NameComponent,
   NpcTagComponent,
-  RandomMovementComponent,
 } from '../Components';
 import { getRandomHumanAnimation } from '../Resources';
 
@@ -51,14 +51,19 @@ export const NpcEntity = ({
         animations.move_right
       )
     )
-    .addComponent(new RandomMovementComponent(64))
+    .addComponent(new MovementToTargetComponent(64))
     .addComponent(
       new BehaviourTreeComponent(`root {
-      sequence while(IsWandering) {
-        action [Whistle]
-        wait [5000]
-      }
-    }`)
+        sequence {
+          sequence {
+            wait [2000,5000]
+            action [PickRandomTarget]
+          }
+          sequence while(IsMoving) {
+            action [MoveToTarget]
+          }
+        }
+      }`)
     );
   return actor;
 };

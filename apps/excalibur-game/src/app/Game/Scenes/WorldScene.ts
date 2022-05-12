@@ -8,7 +8,6 @@ import { WorldTilemap } from '../Resources';
 import {
   CameraFocusSystem,
   PlayerControlSystem,
-  RandomControlSystem,
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
@@ -24,12 +23,11 @@ export class WorldScene extends Scene {
 
   public onActivate() {
     this.world.systemManager.addSystem(new PlayerControlSystem());
-    this.world.systemManager.addSystem(new RandomControlSystem());
     this.world.systemManager.addSystem(new RenderIdleActorsSystem());
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
     this.world.systemManager.addSystem(new CameraFocusSystem());
     this.world.systemManager.addSystem(
-      new BehaviourTreeSystem(GeneralBehaviourBlackBoard)
+      new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
 
     WorldTilemap.addTiledMapToScene(this);
