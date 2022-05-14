@@ -8,40 +8,40 @@ import {
   SystemType,
 } from 'excalibur';
 
-import { zoomToActor } from '../../Core/Game';
-import { PlayerTagComponent } from '../Components';
+import { CharacterInputComponent } from '../Components';
 
 export class PlayerControlSystem extends System<
-  PlayerTagComponent | BodyComponent
+  CharacterInputComponent | BodyComponent
 > {
   systemType: SystemType = SystemType.Update;
-  types = ['game.player', 'ex.body'] as const;
+  types = ['game.movement.controlled', 'ex.body'] as const;
 
   scene!: Scene;
   initialize(scene: Scene) {
     this.scene = scene;
   }
-  update(entities: Entity[], delta: number): void {
+  update(entities: Entity[]) {
     entities.forEach((entity) => {
       if (!(entity instanceof Actor)) return;
-
+      const characterControl = entity.get(CharacterInputComponent);
       const body = entity.get(BodyComponent);
-      if (!body?.owner) return;
+
+      if (!body?.owner || !characterControl) return;
+
       const game = this.scene.engine;
       body.vel.setTo(0, 0);
-      const speed = 64;
 
       if (game.input.keyboard.isHeld(Input.Keys.Right)) {
-        body.vel.x = speed;
+        body.vel.x = characterControl.speed;
       }
       if (game.input.keyboard.isHeld(Input.Keys.Left)) {
-        body.vel.x = -speed;
+        body.vel.x = -characterControl.speed;
       }
       if (game.input.keyboard.isHeld(Input.Keys.Up)) {
-        body.vel.y = -speed;
+        body.vel.y = -characterControl.speed;
       }
       if (game.input.keyboard.isHeld(Input.Keys.Down)) {
-        body.vel.y = speed;
+        body.vel.y = characterControl.speed;
       }
     });
   }

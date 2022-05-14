@@ -14,6 +14,7 @@ import {
 import { GeneralBehaviourBlackBoard } from '../Behaviours';
 
 export class WorldScene extends Scene {
+  map = WorldTilemap;
   player!: ReturnType<typeof PlayerEntity>;
   npcs!: ReturnType<typeof NpcEntity>[];
 
@@ -30,19 +31,23 @@ export class WorldScene extends Scene {
       new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
 
-    WorldTilemap.addTiledMapToScene(this);
-    const actorLayer = WorldTilemap.data.getObjectLayerByName('Actors');
+    this.map.addTiledMapToScene(this);
+
+    const actorLayer = this.map.data.getObjectLayerByName('Actors');
     const actorZindex = actorLayer.getProperty<number>('zIndex');
     this.tileMaps.forEach((tilemap, index) => {
-      const tilemapLayer = WorldTilemap.data.layers[index];
+      const tilemapLayer = this.map.data.layers[index];
       tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
     });
 
     const playerStart = getMapStart({
-      map: WorldTilemap,
+      map: this.map,
       name: 'player-start',
     });
-    const npcStart = getMapStart({ map: WorldTilemap, name: 'npc-start' });
+    const npcStart = getMapStart({
+      map: this.map,
+      name: 'npc-start',
+    });
     this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
     this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
 
