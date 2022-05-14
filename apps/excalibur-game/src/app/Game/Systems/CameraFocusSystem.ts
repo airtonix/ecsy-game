@@ -23,6 +23,8 @@ export class CameraFocusSystem extends System<
   update(entities: Entity[]) {
     const entity = entities[0];
 
+    if (!entity) return;
+
     if (!(entity instanceof Actor))
       throw new Error(
         `CameraFocusSystem can only track an Actor with CameraFocusedTagComponent. The entity ${entity.id} is not an Actor`

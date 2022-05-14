@@ -4,5 +4,5 @@ export { NpcTagComponent } from './NpcTagComponent';
 export { CharacterRenderIdleComponent } from './CharacterRenderIdleComponent';
 export { CharacterRenderMovementComponent } from './CharacterRenderMovementComponent';
 export { CharacterInputComponent } from './CharacterInputComponent';
-export { RandomMovementComponent } from './RandomMovementComponent';
+export { MovementToTargetComponent } from './MovementToTargetComponent';
 export { CameraFocusedTagComponent } from './CameraFocusedTagComponent';

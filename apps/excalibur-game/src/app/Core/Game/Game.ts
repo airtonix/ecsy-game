@@ -5,15 +5,13 @@ import {
   DisplayMode,
   Engine,
   Input,
-  Random,
   Scene,
   Vector,
   vec,
 } from 'excalibur';
 
 export class Game extends Engine {
-  public seed!: Random;
-  constructor(public canvasElement: HTMLCanvasElement, seed?: number) {
+  constructor(public canvasElement: HTMLCanvasElement) {
     super({
       displayMode: DisplayMode.FillContainer,
       backgroundColor: Color.Black,
@@ -22,8 +20,6 @@ export class Game extends Engine {
       antialiasing: false,
       snapToPixel: true,
     });
-
-    this.seed = new Random(seed);
 
     this.input.keyboard.on('press', (evt) => {
       if (evt.key === Input.Keys.D) {

@@ -1,4 +1,4 @@
-import { Actor, CollisionType, Vector } from 'excalibur';
+import { Vector } from 'excalibur';
 
 import {
   CameraFocusedTagComponent,
@@ -8,6 +8,8 @@ import {
   PlayerTagComponent,
 } from '../Components';
 import { MarkCharactorAnimations } from '../Resources';
+
+import { BaseActor } from './Actor';
 
 /**
  * As more Data Components  are used, join their initialising props here
@@ -22,12 +24,9 @@ export const PlayerEntity = ({
   lastName,
 }: PlayerEntityProps) => {
   const character = MarkCharactorAnimations;
-  const actor = new Actor({
+  const actor = new BaseActor({
     name: 'player',
     pos: position,
-    width: 8,
-    height: 8,
-    collisionType: CollisionType.Active,
   });
 
   actor
@@ -52,6 +51,6 @@ export const PlayerEntity = ({
         character.move_right
       )
     )
-    .addComponent(new CharacterInputComponent());
+    .addComponent(new CharacterInputComponent(32));
   return actor;
 };

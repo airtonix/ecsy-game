@@ -27,8 +27,16 @@
         "linter": "eslint"
       },
       "library": {
-        "linter": "eslint"
+        "linter": "eslint",
+        "buildable": false,
+        "publishable": false,
+        "pascalCaseFiles": true
       }
+    },
+    "@nrwl/js:library": {
+      "buildable": false,
+      "publishable": false,
+      "pascalCaseFiles": true
     }
   }
 }

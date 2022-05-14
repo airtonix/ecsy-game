@@ -1,4 +1,12 @@
 {
-    "eslint.format.enable": true,
-    "editor.formatOnSave": true
+  "eslint.format.enable": true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "editor.snippetSuggestions": "bottom",
+  "editor.suggest.localityBonus": true,
+  "editor.suggest.filterGraceful": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": true
 }

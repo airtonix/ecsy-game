@@ -1,8 +1,4 @@
-export {
-  WorldTilemap,
-  KenyyRougeLikePack,
-  KenyyRougeLikeTilemap,
-} from './Tilemap';
+export { WorldTilemap, KenyyRougeLikeTilemap } from './Tilemap';
 export {
   HcHumans1AImage,
   KarenCharactorAnimations,

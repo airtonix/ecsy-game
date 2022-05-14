@@ -10,17 +10,19 @@ import {
   vec,
 } from 'excalibur';
 
-import { RandomMovementComponent } from '../Components';
+import { seed } from '../../Core/Game';
+import { MovementToTargetComponent } from '../Components';
 import { WorldScene } from '../Scenes';
 
 export class RandomControlSystem extends System<
-  RandomMovementComponent | BodyComponent
+  MovementToTargetComponent | BodyComponent
 > {
   systemType: SystemType = SystemType.Update;
-  types = ['game.movement.random', 'ex.body'] as const;
+  types = ['game.movement.totarget', 'ex.body'] as const;
 
   scene!: WorldScene;
   bounds!: { topleft: Vector; bottomright: Vector };
+
   initialize(scene: WorldScene) {
     this.scene = scene;
   }
@@ -34,7 +36,7 @@ export class RandomControlSystem extends System<
   moveEntity(entity: Entity, delta: number) {
     if (!(entity instanceof Actor)) return;
 
-    const movement = entity.get(RandomMovementComponent);
+    const movement = entity.get(MovementToTargetComponent);
     const transform = entity.get(TransformComponent);
     const motion = entity.get(MotionComponent);
 
@@ -45,16 +47,16 @@ export class RandomControlSystem extends System<
       bottomright: vec(map.cellWidth * map.cols, map.cellHeight * map.rows),
     };
 
-    const { destination, speed } = movement;
-    const started = !!destination && destination instanceof Vector;
+    const { target, speed } = movement;
+    const started = !!target && target instanceof Vector;
     const start = new Vector(transform.pos.x, transform.pos.y);
 
     /**
-     * 🏃‍♂️has destination
+     * 🏃‍♂️has target
      */
     if (started) {
-      const distance = (started && start.distance(destination)) || Infinity;
-      const direction = (started && destination.sub(start).normalize()) || 0;
+      const distance = (started && start.distance(target)) || Infinity;
+      const direction = (started && target.sub(start).normalize()) || 0;
       motion.vel = direction.scale(speed);
       const isComplete =
         new Vector(transform.pos.x, transform.pos.y).distance(start) >=
@@ -62,24 +64,20 @@ export class RandomControlSystem extends System<
 
       if (isComplete) {
         motion.vel.setTo(0, 0);
-        movement.destination = undefined;
-        movement.cooldown = Date.now() + this.scene.game.seed.integer(0, 10000);
+        movement.target = undefined;
       }
-    } else if (
-      !movement.destination &&
-      (!movement.cooldown || movement.cooldown < Date.now())
-    ) {
+    } else if (!movement.target) {
       /**
        * Pick a new destination
        */
       const target = vec(
-        this.scene.game.seed.integer(bounds.topleft.x, bounds.bottomright.x),
-        this.scene.game.seed.integer(bounds.topleft.y, bounds.bottomright.y)
+        seed.integer(bounds.topleft.x, bounds.bottomright.x),
+        seed.integer(bounds.topleft.y, bounds.bottomright.y)
       )
         .sub(transform.pos)
         .scale(0.1);
 
-      movement.destination = transform.pos.add(target);
+      movement.target = transform.pos.add(target);
     }
   }
 

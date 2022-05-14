@@ -1,14 +1,16 @@
-import { Actor, CollisionType, Vector } from 'excalibur';
+import { Vector } from 'excalibur';
 
 import { BehaviourTreeComponent } from '@ecsygame/behaviour-tree';
 
 import {
   CharacterRenderMovementComponent,
+  MovementToTargetComponent,
   NameComponent,
   NpcTagComponent,
-  RandomMovementComponent,
 } from '../Components';
 import { getRandomHumanAnimation } from '../Resources';
+
+import { BaseActor } from './Actor';
 
 /**
  * As more Data Components  are used, join their initialising props here
@@ -22,12 +24,9 @@ export const NpcEntity = ({
   lastName,
 }: NpcEntityProps) => {
   const [name, animations] = getRandomHumanAnimation();
-  const actor = new Actor({
+  const actor = new BaseActor({
     name: 'npc',
     pos: position,
-    width: 8,
-    height: 8,
-    collisionType: CollisionType.Active,
   });
 
   actor
@@ -51,14 +50,19 @@ export const NpcEntity = ({
         animations.move_right
       )
     )
-    .addComponent(new RandomMovementComponent(64))
+    .addComponent(new MovementToTargetComponent(48))
     .addComponent(
       new BehaviourTreeComponent(`root {
-      sequence while(IsWandering) {
-        action [Whistle]
-        wait [5000]
-      }
-    }`)
+        sequence {
+          sequence {
+            wait [2000,5000]
+            action [PickRandomTarget]
+          }
+          sequence while(IsMoving) {
+            action [MoveToTarget]
+          }
+        }
+      }`)
     );
   return actor;
 };
