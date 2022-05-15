@@ -41,6 +41,7 @@ importers:
       jest: ~27.2.3
       lint-staged: ~10.5.4
       mistreevous: 2.2.0
+      navmesh: 2.3.1
       nx: ~13.10.3
       prettier: ~2.5.1
       prettier-eslint: ~14.0.1
@@ -94,6 +95,7 @@ importers:
       jest: 27.2.3
       lint-staged: 10.5.4
       mistreevous: 2.2.0
+      navmesh: 2.3.1
       nx: 13.10.3_typescript@4.6.3
       prettier: 2.5.1
       prettier-eslint: 14.0.2
@@ -6677,6 +6679,13 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
 
+  /navmesh/2.3.1:
+    resolution: {integrity: sha512-psNjH0lNJbprtlTNo4gmhqIgNhZxQgxiGtnGAOmtL7I/tByoGfAfDX+/LD/5b26XuLZw3XXTr0+tHScnm5MBWw==}
+    dependencies:
+      core-js: 3.22.3
+      javascript-astar: github.com/mikewesthad/javascript-astar/c0304b12861eda334e27f2f15d701c10b296593f
+    dev: false
+
   /needle/2.9.1:
     resolution: {integrity: sha512-6R9fqJ5Zcmf+uYaFgdIHmLwNldn5HbK8L5ybn7Uz+ylX/rnOsSp1AHcvQSrCaFN+qNM1wpymHqD7mVasEOlHGQ==}
     engines: {node: '>= 4.4.x'}
@@ -8980,4 +8989,10 @@ packages:
 
   /zstddec/0.0.2:
     resolution: {integrity: sha512-DCo0oxvcvOTGP/f5FA6tz2Z6wF+FIcEApSTu0zV5sQgn9hoT5lZ9YRAKUraxt9oP7l4e8TnNdi8IZTCX6WCkwA==}
+    dev: false
+
+  github.com/mikewesthad/javascript-astar/c0304b12861eda334e27f2f15d701c10b296593f:
+    resolution: {tarball: https://codeload.github.com/mikewesthad/javascript-astar/tar.gz/c0304b12861eda334e27f2f15d701c10b296593f}
+    name: javascript-astar
+    version: 0.4.2
     dev: false
