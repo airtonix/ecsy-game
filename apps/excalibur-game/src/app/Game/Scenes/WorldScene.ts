@@ -7,6 +7,7 @@ import { NpcEntity, PlayerEntity } from '../Entities';
 import { WorldTilemap } from '../Resources';
 import {
   CameraFocusSystem,
+  NavMeshSystem,
   PlayerControlSystem,
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
@@ -30,6 +31,8 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(
       new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
+    const navmeshsystem = new NavMeshSystem(this);
+    this.world.systemManager.addSystem(navmeshsystem);
 
     this.map.addTiledMapToScene(this);
 
@@ -39,6 +42,13 @@ export class WorldScene extends Scene {
       const tilemapLayer = this.map.data.layers[index];
       tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
     });
+    const navmesh = navmeshsystem.buildMeshFromTiled(
+      'npc',
+      this.map.data.getObjectLayerByName('navmesh'),
+      10
+    );
+    this.add(navmesh);
+    placeActor(navmesh, vec(0, 0), 100);
 
     const playerStart = getMapStart({
       map: this.map,

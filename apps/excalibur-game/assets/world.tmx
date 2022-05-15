@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="31">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="39">
  <tileset firstgid="1" name="snow-expansion" tilewidth="16" tileheight="16" tilecount="308" columns="22">
   <image source="snow-expansion.png" width="352" height="224"/>
  </tileset>
@@ -60,39 +60,48 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="14" name="WaterCollision">
+ <objectgroup id="14" name="Collision">
   <properties>
    <property name="excalibur" type="bool" value="true"/>
   </properties>
-  <object id="23" type="BoxCollider" x="672" y="429.333" width="49" height="67">
+  <object id="23" type="BoxCollider" x="672" y="429.333" width="48" height="67">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="24" type="BoxCollider" x="721" y="429.667" width="96" height="35">
+  <object id="24" type="BoxCollider" x="720" y="429.667" width="96" height="34.333">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="25" type="BoxCollider" x="767.667" y="464.667" width="49.3333" height="31.6667">
+  <object id="25" type="BoxCollider" x="767.667" y="464" width="48.333" height="32.3337">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="26" type="BoxCollider" x="768" y="512.667" width="49" height="64">
+  <object id="26" type="BoxCollider" x="768" y="512.667" width="48" height="63.333">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="27" type="BoxCollider" x="670.667" y="541.667" width="97" height="34.3333">
+  <object id="27" type="BoxCollider" x="672" y="541.667" width="95.667" height="34.333">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="28" type="BoxCollider" x="670.667" y="513" width="49.6667" height="28.6667">
+  <object id="28" type="BoxCollider" x="672" y="512" width="48" height="29.6667">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="15" name="navmesh">
+  <object id="31" x="724" y="468" width="40" height="68"/>
+  <object id="32" x="668" y="500" width="56" height="8"/>
+  <object id="33" x="764" y="500" width="56" height="8"/>
+  <object id="34" x="820" y="424" width="128" height="156"/>
+  <object id="35" x="528" y="424" width="140" height="156"/>
+  <object id="36" x="528" y="580" width="420" height="28"/>
+  <object id="38" x="528" y="400" width="420" height="24"/>
  </objectgroup>
 </map>
