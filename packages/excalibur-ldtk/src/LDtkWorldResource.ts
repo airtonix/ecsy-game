@@ -100,11 +100,6 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
 
     layers.forEach(async (layer) => {
       this.createOrthogonalTileMapLayer(layer);
-      if (layer.autoLayerTiles)
-        this.createOrthogonalAutoLayerTiles(
-          `${layer.levelID}-${layer.iid}`,
-          layer.autoLayerTiles
-        );
     });
   }
 
@@ -114,6 +109,9 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
    * @returns
    */
   createOrthogonalTileMapLayer(layer: LayerInstance) {
+    Logger.getInstance().info(
+      `Creating Tilemap for level: ${layer.levelID} 👉 ${layer.identifier} [${layer.iid}]`
+    );
     const tilemap = new TileMap({
       x: layer.pxOffsetX,
       y: layer.pxOffsetY,
@@ -124,17 +122,36 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
     });
     tilemap.addComponent(new LDtkLayerComponent(layer));
     this.tileMap[`${layer.levelID}-${layer.iid}`] = tilemap;
+
+    if (layer.autoLayerTiles) this.createOrthogonalAutoLayerTiles(layer);
   }
 
-  createOrthogonalAutoLayerTiles(
-    tilemapKey: string,
-    tiles: LayerInstance['gridTiles']
-  ) {
+  createOrthogonalAutoLayerTiles(layer: LayerInstance) {
+    const tilemapKey = `${layer.levelID}-${layer.iid}`;
+    const tiles = layer.autoLayerTiles;
     const tilemap = this.tileMap[tilemapKey];
+    const tilesetUid = layer.overrideTilesetUid || layer.tilesetDefUid;
+    if (!tilesetUid) {
+      Logger.getInstance().warn(
+        `layer ${layer.identifier} [${layer.iid}] has not defined a tileset`
+      );
+      return;
+    }
+
+    const spritesheet = this.sheetMap[tilesetUid];
     for (const tile of tiles) {
       Logger.getInstance().info(
         `Creating AutoLayerTile for ${tilemapKey}:${tile.t}`
       );
+      const [tilesetX, tilesetY] = tile.src;
+
+      const sprite = spritesheet.sprites.find((sprite) => sprite.id);
+      if (!sprite) {
+        Logger.getInstance().warn(
+          `AutoLayerTile for ${tilemapKey}:${tile.t} can't be found in tileset: ${tilesetUid}`
+        );
+        continue;
+      }
     }
   }
 
