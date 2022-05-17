@@ -1,10 +1,10 @@
-import { Scene, vec } from 'excalibur';
+import { Debug, Logger, Scene, ScreenAppender, vec } from 'excalibur';
 
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
 
 import { Game, getMapStart, placeActor, zoomToActor } from '../../Core/Game';
 import { NpcEntity, PlayerEntity } from '../Entities';
-import { WorldTilemap } from '../Resources';
+import { World } from '../Resources';
 import {
   CameraFocusSystem,
   PlayerControlSystem,
@@ -14,7 +14,6 @@ import {
 import { GeneralBehaviourBlackBoard } from '../Behaviours';
 
 export class WorldScene extends Scene {
-  map = WorldTilemap;
   player!: ReturnType<typeof PlayerEntity>;
   npcs!: ReturnType<typeof NpcEntity>[];
 
@@ -31,37 +30,42 @@ export class WorldScene extends Scene {
       new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
 
-    this.map.addTiledMapToScene(this);
+    // const actorLayer = this.map.data.getObjectLayerByName('Actors');
+    // const actorZindex = actorLayer.getProperty<number>('zIndex');
+    // this.tileMaps.forEach((tilemap, index) => {
+    //   const tilemapLayer = this.map.data.layers[index];
+    //   tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
+    // });
+    // const navmesh = navmeshsystem.buildMeshFromTiled(
+    //   'npc',
+    //   this.map.data.getObjectLayerByName('navmesh'),
+    //   10
+    // );
+    // this.add(navmesh);
+    // placeActor(navmesh, vec(0, 0), 100);
 
-    const actorLayer = this.map.data.getObjectLayerByName('Actors');
-    const actorZindex = actorLayer.getProperty<number>('zIndex');
-    this.tileMaps.forEach((tilemap, index) => {
-      const tilemapLayer = this.map.data.layers[index];
-      tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
-    });
+    // const playerStart = getMapStart({
+    //   map: this.map,
+    //   name: 'player-start',
+    // });
+    // const npcStart = getMapStart({
+    //   map: this.map,
+    //   name: 'npc-start',
+    // });
+    // this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
+    // this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
 
-    const playerStart = getMapStart({
-      map: this.map,
-      name: 'player-start',
-    });
-    const npcStart = getMapStart({
-      map: this.map,
-      name: 'npc-start',
-    });
-    this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
-    this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
-
-    this.add(this.player);
-    this.npcs.forEach((npc) => {
-      this.add(npc);
-      placeActor(
-        npc,
-        vec(npcStart.x + 20, npcStart.y + 20),
-        actorZindex?.value || 1
-      );
-    });
-    placeActor(this.player, playerStart, actorZindex?.value || 1);
-    zoomToActor(this, this.player);
+    // this.add(this.player);
+    // this.npcs.forEach((npc) => {
+    //   this.add(npc);
+    //   placeActor(
+    //     npc,
+    //     vec(npcStart.x + 20, npcStart.y + 20),
+    //     actorZindex?.value || 1
+    //   );
+    // });
+    // placeActor(this.player, playerStart, actorZindex?.value || 1);
+    // zoomToActor(this, this.player);
   }
 }
 

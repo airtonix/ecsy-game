@@ -8,5 +8,8 @@
   "editor.snippetSuggestions": "bottom",
   "editor.suggest.localityBonus": true,
   "editor.suggest.filterGraceful": true,
-  "editor.suggest.snippetsPreventQuickSuggestions": true
+  "editor.suggest.snippetsPreventQuickSuggestions": true,
+
+  "atlascode.bitbucket.enabled": false,
+  "atlascode.jira.enabled": false
 }

@@ -1,0 +1,34 @@
+{
+  "root": "packages/excalibur-ldtk",
+  "sourceRoot": "packages/excalibur-ldtk/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nxext/vite:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/excalibur-ldtk",
+        "packageJson": "package.json",
+        "assets": ["assets"],
+        "entryFile": "src/index.ts",
+        "configFile": "@nxext/vite/plugins/vite-package"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/excalibur-ldtk/**/*.{ts,js}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/excalibur-ldtk"],
+      "options": {
+        "jestConfig": "packages/excalibur-ldtk/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
