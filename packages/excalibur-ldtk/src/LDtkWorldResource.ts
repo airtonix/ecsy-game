@@ -99,7 +99,12 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
     );
 
     layers.forEach(async (layer) => {
-      await this.createOrthogonalTileMapLayer(layer);
+      this.createOrthogonalTileMapLayer(layer);
+      if (layer.autoLayerTiles)
+        this.createOrthogonalAutoLayerTiles(
+          `${layer.levelID}-${layer.iid}`,
+          layer.autoLayerTiles
+        );
     });
   }
 
@@ -108,7 +113,7 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
    * @param layer
    * @returns
    */
-  async createOrthogonalTileMapLayer(layer: LayerInstance) {
+  createOrthogonalTileMapLayer(layer: LayerInstance) {
     const tilemap = new TileMap({
       x: layer.pxOffsetX,
       y: layer.pxOffsetY,
@@ -121,10 +126,22 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
     this.tileMap[`${layer.levelID}-${layer.iid}`] = tilemap;
   }
 
+  createOrthogonalAutoLayerTiles(
+    tilemapKey: string,
+    tiles: LayerInstance['gridTiles']
+  ) {
+    const tilemap = this.tileMap[tilemapKey];
+    for (const tile of tiles) {
+      Logger.getInstance().info(
+        `Creating AutoLayerTile for ${tilemapKey}:${tile.t}`
+      );
+    }
+  }
+
   /**
    * Create an isometric tilemap layer
    *
-   * TODO: find data in LDtk that supports isometric tilemaps
+   * TODO: #6 find data in LDtk that supports isometric tilemaps
    */
   async createIsoMetricTileMap() {
     throw new Error('ISOMetric layers not supported yet');

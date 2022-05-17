@@ -1,3 +1,3 @@
-import { LDtkMapResource } from '@ecsygame/excalibur-ldtk';
+import { LDtkWorldResource } from '@ecsygame/excalibur-ldtk';
 
-export const World = new LDtkMapResource('/assets/world.ldtk');
+export const World = new LDtkWorldResource('/assets/world.ldtk');
