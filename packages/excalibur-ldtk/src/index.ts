@@ -1,1 +1,1 @@
-export { LDtkMapResource } from './LDtkMapResource';
+export { LDtkWorldResource } from './LDtkWorldResource';
