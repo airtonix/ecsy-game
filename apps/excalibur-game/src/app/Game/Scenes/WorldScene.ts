@@ -30,7 +30,7 @@ export class WorldScene extends Scene {
       new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
 
-    World.addToScene(this, 'Level_1');
+    // World.addToScene(this, 'Level_1');
 
     // const actorLayer = this.map.data.getObjectLayerByName('Actors');
     // const actorZindex = actorLayer.getProperty<number>('zIndex');
@@ -38,13 +38,6 @@ export class WorldScene extends Scene {
     //   const tilemapLayer = this.map.data.layers[index];
     //   tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
     // });
-    // const navmesh = navmeshsystem.buildMeshFromTiled(
-    //   'npc',
-    //   this.map.data.getObjectLayerByName('navmesh'),
-    //   10
-    // );
-    // this.add(navmesh);
-    // placeActor(navmesh, vec(0, 0), 100);
 
     // const playerStart = getMapStart({
     //   map: this.map,
@@ -67,7 +60,6 @@ export class WorldScene extends Scene {
     //   );
     // });
     // placeActor(this.player, playerStart, actorZindex?.value || 1);
-    // zoomToActor(this, this.player);
   }
 }
 

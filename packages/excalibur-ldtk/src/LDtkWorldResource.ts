@@ -22,19 +22,21 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
 
   /** Spritesheet cache. Stored against the tileset.uid */
   spritesheets!: Map<number, SpriteSheet>;
-  levels: Record<string, LDtkLevel>;
+  levels: Map<string, LDtkLevel>;
   tilemaps!: Map<string, Map<string, TileMap>>;
 
   data!: LDtkProject;
   logger = Logger.getInstance();
 
+  _loaded = false;
+
   constructor(public path: string) {
     this._resource = new Resource(path, 'text');
-    this.levels = {};
+    this.levels = new Map<string, LDtkLevel>();
   }
 
   isLoaded(): boolean {
-    return !!this.data;
+    return !!this._loaded;
   }
 
   /**
@@ -49,23 +51,37 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
       throw new Error('Problem');
     }
 
-    this.levels = this.data.levels.reduce((levels, level) => {
-      levels[level.iid] = new LDtkLevel(level);
-      return levels;
-    }, this.levels);
+    for (const level of this.data.levels) {
+      this.levels.set(level.iid, new LDtkLevel(level));
+    }
 
     this.imagemaps = await this.loadTilesetImages();
     this.spritesheets = await this.createTilesetSpriteSheets(this.imagemaps);
     this.tilemaps = await this.createTileMaps();
 
+    this._loaded = true;
     return this.data;
   }
 
-  addToScene(scene: Scene, levelId: string) {
-    const level = this.levels[levelId];
+  addToScene(scene: Scene, levelName: string) {
+    const level = this.getLevelByIdentifier(levelName);
+    if (!level) throw new Error(`No level by name of ${levelName}`);
+    if (!this.tilemaps) throw new Error('Missing tilemaps');
+    const tileMapLayers = this.tilemaps.get(level.iid);
+    if (tileMapLayers) {
+      for (const layer of tileMapLayers.values()) {
+        scene.add(layer);
+      }
+    }
     level.zoomToCameraStart(scene);
   }
 
+  getLevelByIdentifier(name: string) {
+    for (const level of this.levels.values()) {
+      if (level.identifier === name) return level;
+    }
+    return;
+  }
   /**
    * Scans the world for tileset image references and
    * async loads them
@@ -97,8 +113,8 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
       const image = imagemaps.get(tileset.uid);
       if (!image) continue;
 
-      const columns = Math.floor(tileset.pxHei / tileset.cHei);
-      const rows = Math.floor(tileset.pxWid / tileset.cWid);
+      const columns = Math.floor(tileset.pxWid / tileset.tileGridSize);
+      const rows = Math.floor(tileset.pxHei / tileset.tileGridSize);
       const spritesheet = SpriteSheet.fromImageSource({
         image,
         grid: {
@@ -115,10 +131,10 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
 
   createTileMaps() {
     const tilemaps = new Map<string, Map<string, TileMap>>();
-    for (const levelId in this.levels) {
-      const level = this.levels[levelId];
+    for (const level of this.levels.values()) {
       const leveltilemaps = new Map<string, TileMap>();
-      for (const layer of level.getLayersByType('AutoLayer')) {
+      const layers = level.getLayersByTypes('IntGrid', 'Tiles');
+      for (const layer of layers) {
         leveltilemaps.set(layer.iid, this.createOrthogonalTileMapLayer(layer));
       }
       tilemaps.set(level.iid, leveltilemaps);
@@ -135,13 +151,20 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
     Logger.getInstance().info(
       `Creating Tilemap for level: ${layer.levelID} 👉 ${layer.identifier} [${layer.iid}]`
     );
+    const level = this.levels.get(layer.levelID.toString());
+    if (!level) {
+      throw new Error(
+        `Layer [${layer.identifier}] is missing a reference to an existing level ${layer.levelID}`
+      );
+    }
+
     const tilemap = new TileMap({
-      x: layer.pxOffsetX,
-      y: layer.pxOffsetY,
+      x: layer.pxTotalOffsetX,
+      y: layer.pxTotalOffsetY,
       cellHeight: layer.gridSize,
       cellWidth: layer.gridSize,
-      cols: 64,
-      rows: 64,
+      cols: Math.floor(level?.pxWid / layer.gridSize),
+      rows: Math.floor(level?.pxHei / layer.gridSize),
     });
     tilemap.addComponent(new LDtkLayerComponent(layer));
     if (layer.autoLayerTiles) {

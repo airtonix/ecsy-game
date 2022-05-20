@@ -142,6 +142,11 @@ export class LDtkLevel
   getLayersByType(type: LayerInstance['type']) {
     return Object.values(this.layers).filter((layer) => layer.type === type);
   }
+  getLayersByTypes(...types: LayerInstance['type'][]) {
+    return Object.values(this.layers).filter((layer) =>
+      types.includes(layer.type)
+    );
+  }
 
   getEntityLayers() {
     return Object.values(this.layers).filter((layer) => {
