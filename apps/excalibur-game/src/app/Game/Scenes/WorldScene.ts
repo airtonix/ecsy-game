@@ -30,6 +30,8 @@ export class WorldScene extends Scene {
       new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
 
+    World.addToScene(this, 'Level_1');
+
     // const actorLayer = this.map.data.getObjectLayerByName('Actors');
     // const actorZindex = actorLayer.getProperty<number>('zIndex');
     // this.tileMaps.forEach((tilemap, index) => {

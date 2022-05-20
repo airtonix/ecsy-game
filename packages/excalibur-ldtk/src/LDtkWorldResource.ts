@@ -3,6 +3,7 @@ import {
   Loadable,
   Logger,
   Resource,
+  Scene,
   SpriteSheet,
   TileMap,
 } from 'excalibur';
@@ -10,24 +11,30 @@ import {
 import { convertPath } from './convertPath';
 import { Convert, LDtkProject, LayerInstance } from './ldtk';
 import { LDtkLayerComponent } from './LDtkLayerComponent';
+import { LDtkLayerInstance } from './LDtkLayerInstance';
+import { LDtkLevel } from './LDtkLevel';
 
 export class LDtkWorldResource implements Loadable<LDtkProject> {
   private _resource: Resource<string>;
 
   /** ImageSource cache. stored against  */
-  public imageMap: Record<string, ImageSource> = {};
-
-  /** Tilemap cache. Stored against the levelid-layerid */
-  public tileMap: Record<string, TileMap> = {};
+  imagemaps!: Map<number, ImageSource>;
 
   /** Spritesheet cache. Stored against the tileset.uid */
-  public sheetMap: Record<string, SpriteSheet> = {};
+  spritesheets!: Map<number, SpriteSheet>;
+  levels: Record<string, LDtkLevel>;
+  tilemaps!: Map<string, Map<string, TileMap>>;
 
-  public data!: LDtkProject;
+  data!: LDtkProject;
   logger = Logger.getInstance();
 
   constructor(public path: string) {
     this._resource = new Resource(path, 'text');
+    this.levels = {};
+  }
+
+  isLoaded(): boolean {
+    return !!this.data;
   }
 
   /**
@@ -41,11 +48,22 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
     } catch (err) {
       throw new Error('Problem');
     }
-    await this.loadTilesetImages();
-    await this.createTilesetSpriteSheets();
-    await this.createTileMaps();
+
+    this.levels = this.data.levels.reduce((levels, level) => {
+      levels[level.iid] = new LDtkLevel(level);
+      return levels;
+    }, this.levels);
+
+    this.imagemaps = await this.loadTilesetImages();
+    this.spritesheets = await this.createTilesetSpriteSheets(this.imagemaps);
+    this.tilemaps = await this.createTileMaps();
 
     return this.data;
+  }
+
+  addToScene(scene: Scene, levelId: string) {
+    const level = this.levels[levelId];
+    level.zoomToCameraStart(scene);
   }
 
   /**
@@ -53,8 +71,10 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
    * async loads them
    */
   async loadTilesetImages() {
+    const imagemaps = new Map<number, ImageSource>();
     for (const tileset of this.data.defs.tilesets) {
       if (!tileset.relPath) continue;
+
       const source = tileset.relPath;
       const resource = new ImageSource(convertPath(this.path, source));
       Logger.getInstance().debug(
@@ -62,20 +82,25 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
       );
 
       await resource.load();
-      this.imageMap[tileset.uid] = resource;
+      imagemaps.set(tileset.uid, resource);
     }
+    return imagemaps;
   }
 
   /**
    * Scans the world for tileset image references and
    * constructs SpriteSheets from the efforts of [this.loadTilesetImages]
    */
-  createTilesetSpriteSheets() {
+  createTilesetSpriteSheets(imagemaps: Map<number, ImageSource>) {
+    const spritesheets = new Map();
     for (const tileset of this.data.defs.tilesets) {
+      const image = imagemaps.get(tileset.uid);
+      if (!image) continue;
+
       const columns = Math.floor(tileset.pxHei / tileset.cHei);
       const rows = Math.floor(tileset.pxWid / tileset.cWid);
       const spritesheet = SpriteSheet.fromImageSource({
-        image: this.imageMap[tileset.uid],
+        image,
         grid: {
           columns,
           rows,
@@ -83,24 +108,22 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
           spriteWidth: tileset.tileGridSize,
         },
       });
-      this.sheetMap[tileset.uid] = spritesheet;
+      spritesheets.set(tileset.uid, spritesheet);
     }
+    return spritesheets;
   }
 
-  /**
-   * Start constructing the tilemap for each levels layer
-   */
-  async createTileMaps() {
-    const layers = this.data.levels.reduce<LayerInstance[]>(
-      (results, level) => {
-        return [...results, ...(level.layerInstances || [])];
-      },
-      []
-    );
-
-    layers.forEach(async (layer) => {
-      this.createOrthogonalTileMapLayer(layer);
-    });
+  createTileMaps() {
+    const tilemaps = new Map<string, Map<string, TileMap>>();
+    for (const levelId in this.levels) {
+      const level = this.levels[levelId];
+      const leveltilemaps = new Map<string, TileMap>();
+      for (const layer of level.getLayersByType('AutoLayer')) {
+        leveltilemaps.set(layer.iid, this.createOrthogonalTileMapLayer(layer));
+      }
+      tilemaps.set(level.iid, leveltilemaps);
+    }
+    return tilemaps;
   }
 
   /**
@@ -108,7 +131,7 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
    * @param layer
    * @returns
    */
-  createOrthogonalTileMapLayer(layer: LayerInstance) {
+  createOrthogonalTileMapLayer(layer: LDtkLayerInstance) {
     Logger.getInstance().info(
       `Creating Tilemap for level: ${layer.levelID} 👉 ${layer.identifier} [${layer.iid}]`
     );
@@ -121,15 +144,13 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
       rows: 64,
     });
     tilemap.addComponent(new LDtkLayerComponent(layer));
-    this.tileMap[`${layer.levelID}-${layer.iid}`] = tilemap;
-
-    if (layer.autoLayerTiles) this.createOrthogonalAutoLayerTiles(layer);
+    if (layer.autoLayerTiles) {
+      this.createAutoTile(layer, tilemap);
+    }
+    return tilemap;
   }
-
-  createOrthogonalAutoLayerTiles(layer: LayerInstance) {
-    const tilemapKey = `${layer.levelID}-${layer.iid}`;
+  createAutoTile(layer: LDtkLayerInstance, tilemap: TileMap) {
     const tiles = layer.autoLayerTiles;
-    const tilemap = this.tileMap[tilemapKey];
     const tilesetUid = layer.overrideTilesetUid || layer.tilesetDefUid;
     if (!tilesetUid) {
       Logger.getInstance().warn(
@@ -138,20 +159,25 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
       return;
     }
 
-    const spritesheet = this.sheetMap[tilesetUid];
+    const spritesheet = this.spritesheets.get(tilesetUid);
+    if (!spritesheet) return;
+
     for (const tile of tiles) {
       Logger.getInstance().info(
-        `Creating AutoLayerTile for ${tilemapKey}:${tile.t}`
+        `Creating AutoLayerTile for ${layer.identifier}:${tile.t}`
       );
-      const [tilesetX, tilesetY] = tile.src;
-
-      const sprite = spritesheet.sprites.find((sprite) => sprite.id);
+      const sprite = spritesheet.sprites[tile.t];
       if (!sprite) {
         Logger.getInstance().warn(
-          `AutoLayerTile for ${tilemapKey}:${tile.t} can't be found in tileset: ${tilesetUid}`
+          `AutoLayerTile for ${layer.identifier}:${tile.t} can't be found in tileset: ${tilesetUid}`
         );
         continue;
       }
+      const [tileX, tileY] = tile.px;
+      const tileMapTile = tilemap.getCell(tileX, tileY);
+      if (!tileMapTile) continue;
+
+      tileMapTile.addGraphic(sprite);
     }
   }
 
@@ -162,9 +188,5 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
    */
   async createIsoMetricTileMap() {
     throw new Error('ISOMetric layers not supported yet');
-  }
-
-  isLoaded(): boolean {
-    return !!this.data;
   }
 }
