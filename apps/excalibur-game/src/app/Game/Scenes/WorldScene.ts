@@ -1,8 +1,8 @@
-import { Debug, Logger, Scene, ScreenAppender, vec } from 'excalibur';
+import { Scene, vec } from 'excalibur';
 
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
 
-import { Game, getMapStart, placeActor, zoomToActor } from '../../Core/Game';
+import { Game, placeActor } from '../../Core/Game';
 import { NpcEntity, PlayerEntity } from '../Entities';
 import { World } from '../Resources';
 import {
@@ -30,36 +30,28 @@ export class WorldScene extends Scene {
       new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
     );
 
-    // World.addToScene(this, 'Level_1');
-
-    // const actorLayer = this.map.data.getObjectLayerByName('Actors');
-    // const actorZindex = actorLayer.getProperty<number>('zIndex');
-    // this.tileMaps.forEach((tilemap, index) => {
-    //   const tilemapLayer = this.map.data.layers[index];
-    //   tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
-    // });
-
-    // const playerStart = getMapStart({
-    //   map: this.map,
-    //   name: 'player-start',
-    // });
-    // const npcStart = getMapStart({
-    //   map: this.map,
-    //   name: 'npc-start',
-    // });
-    // this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
-    // this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
-
-    // this.add(this.player);
-    // this.npcs.forEach((npc) => {
-    //   this.add(npc);
-    //   placeActor(
-    //     npc,
-    //     vec(npcStart.x + 20, npcStart.y + 20),
-    //     actorZindex?.value || 1
-    //   );
-    // });
-    // placeActor(this.player, playerStart, actorZindex?.value || 1);
+    World.addToScene(this, 'Level_1');
+    World.generateEntities('Level_1', {
+      default: (entity) => {
+        const [x, y] = entity.px;
+        const position = vec(x, y);
+        const firstName = entity.getFieldValue<string>('name', 'Unnamed');
+        const npc = NpcEntity({
+          firstName,
+          position,
+        });
+        placeActor(npc, position);
+      },
+      player: (entity) => {
+        const [x, y] = entity.px;
+        const position = vec(x, y);
+        const player = PlayerEntity({
+          firstName: 'Player1',
+          position,
+        });
+        placeActor(player, position);
+      },
+    });
   }
 }
 

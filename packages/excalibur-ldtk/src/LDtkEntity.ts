@@ -38,8 +38,14 @@ export class LDtkEntity implements Omit<EntityInstance, 'fieldInstances'> {
     );
   }
 
-  public getField<T = unknown>(prop: string) {
+  public getField<T>(prop: string) {
     return getField<T>(Object.values(this.fields), prop);
+  }
+
+  public getFieldValue<T>(prop: string, defaultValue: T) {
+    const field = this.getField<T>(prop);
+    if (field) return field.value as T;
+    return defaultValue;
   }
 
   public hasField(key: string, value?: string | number | boolean) {

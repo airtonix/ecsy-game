@@ -58,16 +58,6 @@ export function zoomToActor(scene: Scene, actor: Actor) {
   scene.camera.zoomOverTime(2, 200);
 }
 
-type GetMapStartProps = {
-  map: TiledMapResource;
-  name: string;
-};
-export function getMapStart({ map, name }: GetMapStartProps) {
-  const objects = map.data.getExcaliburObjects();
-  const start = objects[0].getObjectByName(name);
-  return vec(start?.x || 0, start?.y || 0);
-}
-
 export function placeActor(actor: Actor, position: Vector, zIndex?: number) {
   actor.pos.x = position.x;
   actor.pos.y = position.y;

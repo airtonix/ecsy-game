@@ -2,15 +2,15 @@ import { FieldInstance, TilesetRectangle } from './ldtk';
 
 type TypedFieldInstance<T> = FieldInstance & { value: T };
 
-export const getField = <T = unknown>(
+export const getField = <T>(
   fields: FieldInstance[],
   prop: string
 ): TypedFieldInstance<T> | undefined => {
   if (Array.isArray(fields)) {
-    return fields?.filter(
+    return fields?.find(
       (field) =>
         field.identifier?.toLocaleLowerCase() === prop.toLocaleLowerCase()
-    )[0] as TypedFieldInstance<T>;
+    ) as TypedFieldInstance<T>;
   }
   return;
 };
