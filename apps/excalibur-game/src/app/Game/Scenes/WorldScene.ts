@@ -1,9 +1,8 @@
-import { Scene, vec } from 'excalibur';
+import { Scene } from 'excalibur';
 
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
 
-import { Game, placeActor } from '../../Core/Game';
-import { NpcEntity, PlayerEntity } from '../Entities';
+import { Game } from '../../Core/Game';
 import { World } from '../Resources';
 import {
   CameraFocusSystem,
@@ -11,12 +10,9 @@ import {
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
-import { GeneralBehaviourBlackBoard } from '../Behaviours';
+import { EntityFactory } from '../Entities/factory';
 
 export class WorldScene extends Scene {
-  player!: ReturnType<typeof PlayerEntity>;
-  npcs!: ReturnType<typeof NpcEntity>[];
-
   constructor(public game: Game) {
     super();
   }
@@ -26,32 +22,10 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(new RenderIdleActorsSystem());
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
     this.world.systemManager.addSystem(new CameraFocusSystem());
-    this.world.systemManager.addSystem(
-      new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
-    );
+    this.world.systemManager.addSystem(new BehaviourTreeSystem());
 
     World.addToScene(this, 'Level_1');
-    World.generateEntities('Level_1', {
-      default: (entity) => {
-        const [x, y] = entity.px;
-        const position = vec(x, y);
-        const firstName = entity.getFieldValue<string>('name', 'Unnamed');
-        const npc = NpcEntity({
-          firstName,
-          position,
-        });
-        placeActor(npc, position);
-      },
-      player: (entity) => {
-        const [x, y] = entity.px;
-        const position = vec(x, y);
-        const player = PlayerEntity({
-          firstName: 'Player1',
-          position,
-        });
-        placeActor(player, position);
-      },
-    });
+    World.generateEntities(this, 'Level_1', EntityFactory);
   }
 }
 

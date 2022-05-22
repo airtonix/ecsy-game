@@ -28,6 +28,7 @@ export function createOrthognoalTileMaps(
       level?.pxHei,
       layer
     );
+    tilemap.z = level.getLayerZindex(layer.iid);
 
     tilemaps.set(layer.iid, tilemap);
     const spritesheet = spritesheets.get(tilesetUid);

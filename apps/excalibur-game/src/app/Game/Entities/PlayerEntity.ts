@@ -51,6 +51,6 @@ export const PlayerEntity = ({
         character.move_right
       )
     )
-    .addComponent(new CharacterInputComponent(32));
+    .addComponent(new CharacterInputComponent(48));
   return actor;
 };

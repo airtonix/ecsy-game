@@ -1,6 +1,5 @@
-import { Class, Entity, Logger, Scene, SpriteSheet } from 'excalibur';
+import { Scene, SpriteSheet } from 'excalibur';
 
-import { LDtkEntity } from '../LDtkEntity';
 import { LDtkLevel } from '../LDtkLevel';
 
 import { createOrthognoalTileMaps } from './createOrthognoalTileMaps';
@@ -12,9 +11,10 @@ export class LDtkOrthognalLevelTilemap {
   ) {}
 
   addToScene(scene: Scene) {
-    for (const layer of this.layers.values()) {
+    Array.from(this.layers.values()).forEach((layer, index) => {
       scene.add(layer);
-    }
+      layer.z = index;
+    });
     return this;
   }
 

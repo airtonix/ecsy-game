@@ -1,5 +1,5 @@
 import {
-  Entity,
+  Actor,
   ImageSource,
   Loadable,
   Logger,
@@ -76,8 +76,9 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
   }
 
   generateEntities(
+    scene: Scene,
     levelName: string,
-    entityMap: Record<string, (entity: LDtkEntity) => void>
+    entityMap: Record<string, (entity: LDtkEntity) => Actor>
   ) {
     const level = this.getLevelByIdentifier(levelName);
     if (!level) throw new Error(`No level by name of ${levelName}`);
@@ -93,7 +94,14 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
           continue;
         }
         try {
-          entityFactory(entity);
+          const actor = entityFactory(entity);
+          actor.z = level.getLayerZindex(layer.iid);
+          scene.add(actor);
+          Logger.getInstance().info(
+            `Generated entity: ${entity.identifier} on layer ${actor.z}`,
+            entity,
+            actor
+          );
         } catch (error) {
           Logger.getInstance().error(
             `Problem creating Entity from provided entityMap for ${entity.identifier}`

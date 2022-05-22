@@ -9,6 +9,7 @@ import {
   NpcTagComponent,
 } from '../Components';
 import { getRandomHumanAnimation } from '../Resources';
+import { IsMoving, MoveToTarget, PickRandomTarget } from '../Behaviours';
 
 import { BaseActor } from './Actor';
 
@@ -52,7 +53,8 @@ export const NpcEntity = ({
     )
     .addComponent(new MovementToTargetComponent(48))
     .addComponent(
-      new BehaviourTreeComponent(`root {
+      new BehaviourTreeComponent(
+        `root {
         sequence {
           sequence {
             wait [2000,5000]
@@ -62,7 +64,13 @@ export const NpcEntity = ({
             action [MoveToTarget]
           }
         }
-      }`)
+      }`,
+        {
+          IsMoving,
+          MoveToTarget,
+          PickRandomTarget,
+        }
+      )
     );
   return actor;
 };

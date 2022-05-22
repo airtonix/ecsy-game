@@ -1,4 +1,4 @@
-import { EntityInstance, FieldInstance, TilesetRectangle } from './ldtk';
+import { EntityInstance, TilesetRectangle } from './ldtk';
 import { LDtkFieldInstance, getField } from './LDtkFieldInstance';
 
 export class LDtkEntity implements Omit<EntityInstance, 'fieldInstances'> {

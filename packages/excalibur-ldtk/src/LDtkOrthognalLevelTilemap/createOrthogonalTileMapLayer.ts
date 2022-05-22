@@ -1,4 +1,4 @@
-import { Logger, TileMap } from 'excalibur';
+import { Logger, TileMap, vec } from 'excalibur';
 
 import { LDtkLayerComponent } from '../LDtkLayerComponent';
 import { LDtkLayerInstance } from '../LDtkLayerInstance';
@@ -16,11 +16,10 @@ export function createOrthogonalTileMapLayer(
   );
 
   const tilemap = new TileMap({
-    x: layer.pxTotalOffsetX,
-    y: layer.pxTotalOffsetY,
-    cellHeight: layer.gridSize,
-    cellWidth: layer.gridSize,
-    cols: Math.floor(levelWidth / layer.gridSize),
+    pos: vec(layer.pxTotalOffsetX, layer.pxTotalOffsetY),
+    tileHeight: layer.gridSize,
+    tileWidth: layer.gridSize,
+    columns: Math.floor(levelWidth / layer.gridSize),
     rows: Math.floor(levelHeight / layer.gridSize),
   });
 

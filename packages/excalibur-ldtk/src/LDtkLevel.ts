@@ -31,6 +31,7 @@ export class LDtkLevel
   externalRelPath?: string | null | undefined;
   identifier: string;
   iid: string;
+  layerInstances: LayerInstance[];
   layers: Record<string, LDtkLayerInstance>;
   fields: Record<string, LDtkFieldInstance>;
   pxHei: number;
@@ -72,6 +73,8 @@ export class LDtkLevel
       },
       {}
     );
+
+    this.layerInstances = level.layerInstances || [];
 
     this.layers = !level.layerInstances
       ? {}
@@ -146,6 +149,10 @@ export class LDtkLevel
     return Object.values(this.layers).filter((layer) =>
       types.includes(layer.type)
     );
+  }
+
+  getLayerZindex(layerId: string) {
+    return this.layerInstances.findIndex((layer) => layer.iid === layerId);
   }
 
   getEntityLayers() {

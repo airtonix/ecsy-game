@@ -1,4 +1,3 @@
-import { TiledMapResource } from '@excaliburjs/plugin-tiled';
 import {
   Actor,
   Color,
@@ -7,7 +6,6 @@ import {
   Input,
   Scene,
   Vector,
-  vec,
 } from 'excalibur';
 
 export class Game extends Engine {

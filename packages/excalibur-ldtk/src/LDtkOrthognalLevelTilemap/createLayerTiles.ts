@@ -1,4 +1,4 @@
-import { Logger, SpriteSheet, TileMap } from 'excalibur';
+import { Logger, SpriteSheet, TileMap, vec } from 'excalibur';
 
 import { TileInstance } from '../ldtk';
 import { LDtkLayerInstance } from '../LDtkLayerInstance';
@@ -34,7 +34,7 @@ export function createLayerTiles(
       continue;
     }
     const [tileX, tileY] = tile.px;
-    const tileMapTile = tilemap.getCellByPoint(tileX, tileY);
+    const tileMapTile = tilemap.getTileByPoint(vec(tileX, tileY));
     if (!tileMapTile) {
       Logger.getInstance().warn(
         `Cant find tile in tilemap`,
