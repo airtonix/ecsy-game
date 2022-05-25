@@ -10,8 +10,11 @@ export const EntityFactory = {
   Portal: (entity: LDtkEntity) => {
     const [x, y] = entity.px;
     const position = vec(x, y);
+    const target = entity.getFieldValue<object>('To', {});
+
     return PortalEntity({
       position,
+      target,
     });
   },
   Npc: (entity: LDtkEntity) => {

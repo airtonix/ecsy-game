@@ -1,21 +1,19 @@
 import {
-  Actor,
   ImageSource,
   Loadable,
   Logger,
   Resource,
-  Scene,
   SpriteSheet,
 } from 'excalibur';
 
 import { convertPath } from './convertPath';
 import { Convert, LDtkProject } from './ldtk';
-import { LDtkEntity } from './LDtkEntity';
 import { LDtkLevel } from './LDtkLevel';
-import { LDtkOrthognalLevelTilemap } from './LDtkOrthognalLevelTilemap';
 
 export class LDtkWorldResource implements Loadable<LDtkProject> {
   private _resource: Resource<string>;
+
+  id!: string;
 
   /** ImageSource cache. stored against  */
   imagemaps!: Map<number, ImageSource>;
@@ -65,51 +63,11 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
     return this.data;
   }
 
-  addToScene(scene: Scene, levelName: string) {
-    const level = this.getLevelByIdentifier(levelName);
-    if (!level) throw new Error(`No level by name of ${levelName}`);
-    LDtkOrthognalLevelTilemap.create(level, this.spritesheets).addToScene(
-      scene
-    );
-
-    level.zoomToCameraStart(scene);
-  }
-
-  generateEntities(
-    scene: Scene,
-    levelName: string,
-    entityMap: Record<string, (entity: LDtkEntity) => Actor>
-  ) {
-    const level = this.getLevelByIdentifier(levelName);
-    if (!level) throw new Error(`No level by name of ${levelName}`);
-
-    for (const layer of level.getEntityLayers()) {
-      for (const entityId in layer.entities) {
-        const entity = layer.entities[entityId];
-        const entityFactory = entityMap[entity.identifier] || entityMap.default;
-        if (!entityFactory) {
-          Logger.getInstance().warn(
-            `Provided entityMap does not have an entry for ${entity.identifier}`
-          );
-          continue;
-        }
-        try {
-          const actor = entityFactory(entity);
-          actor.z = level.getLayerZindex(layer.iid);
-          scene.add(actor);
-          Logger.getInstance().info(
-            `Generated entity: ${entity.identifier} on layer ${actor.z}`,
-            entity,
-            actor
-          );
-        } catch (error) {
-          Logger.getInstance().error(
-            `Problem creating Entity from provided entityMap for ${entity.identifier}`
-          );
-        }
-      }
+  getLevelIIDFromName(name: string) {
+    for (const level of this.levels.values()) {
+      if (level.identifier === name) return level.iid;
     }
-    return this;
+    throw new Error(`No Level IID for ${name}`);
   }
 
   getLevelByIdentifier(name: string) {
@@ -120,7 +78,14 @@ export class LDtkWorldResource implements Loadable<LDtkProject> {
   }
 
   getLevelByUid(uid: number) {
-    return Array.from(this.levels.values()).find((level) => level.uid === uid);
+    for (const level of this.levels.values()) {
+      if (level.uid === uid) return level;
+    }
+    return;
+  }
+
+  getLevelByIID(iid: string) {
+    return this.levels.get(iid);
   }
   /**
    * Scans the world for tileset image references and

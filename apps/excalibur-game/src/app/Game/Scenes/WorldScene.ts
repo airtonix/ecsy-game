@@ -1,6 +1,10 @@
-import { Scene } from 'excalibur';
+import { Actor, Engine, Entity, Scene } from 'excalibur';
 
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
+import {
+  LDtkOrthogonalSystem,
+  LDtkOrthogonalTilemap,
+} from '@ecsygame/excalibur-ldtk';
 
 import { Game } from '../../Core/Game';
 import { World } from '../Resources';
@@ -10,11 +14,17 @@ import {
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
-import { EntityFactory } from '../Entities/factory';
 
+export const WorldSceneKey = 'world';
 export class WorldScene extends Scene {
+  public tilemap!: Entity;
+
   constructor(public game: Game) {
     super();
+  }
+
+  public onInitialize(_engine: Engine): void {
+    return;
   }
 
   public onActivate() {
@@ -23,10 +33,9 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
     this.world.systemManager.addSystem(new CameraFocusSystem());
     this.world.systemManager.addSystem(new BehaviourTreeSystem());
+    this.world.systemManager.addSystem(new LDtkOrthogonalSystem());
 
-    World.addToScene(this, 'Level_1');
-    World.generateEntities(this, 'Level_1', EntityFactory);
+    this.tilemap = LDtkOrthogonalTilemap(World, 'Level_1');
+    this.add(this.tilemap);
   }
 }
-
-export const WorldSceneKey = 'world';

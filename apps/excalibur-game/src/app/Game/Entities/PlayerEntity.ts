@@ -6,6 +6,7 @@ import {
   CharacterRenderMovementComponent,
   NameComponent,
   PlayerTagComponent,
+  TouchableComponent,
 } from '../Components';
 import { MarkCharactorAnimations } from '../Resources';
 
@@ -31,6 +32,7 @@ export const PlayerEntity = ({
 
   actor
     .addComponent(new PlayerTagComponent())
+    .addComponent(new TouchableComponent())
     .addComponent(new CameraFocusedTagComponent())
     .addComponent(
       new NameComponent({

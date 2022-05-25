@@ -12,6 +12,7 @@ import { getRandomHumanAnimation } from '../Resources';
 import { IsMoving, MoveToTarget, PickRandomTarget } from '../Behaviours';
 
 import { BaseActor } from './Actor';
+import { NpcCollisionGroup } from './CollisionGroups';
 
 /**
  * As more Data Components  are used, join their initialising props here
@@ -28,6 +29,7 @@ export const NpcEntity = ({
   const actor = new BaseActor({
     name: 'npc',
     pos: position,
+    collisionGroup: NpcCollisionGroup,
   });
 
   actor

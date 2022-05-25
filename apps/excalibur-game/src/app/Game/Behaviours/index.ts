@@ -1,5 +1,6 @@
-export { IsMoving } from './IsMovingAction';
+export { IsMoving } from './IsMovingCondition';
+export { IsBeingTouched } from './IsBeingTouchedCondition';
+
 export { MoveToTarget } from './MoveToTargetAction';
 export { PickRandomTarget } from './PickRandomLocationToMoveToAction';
-export { IsBeingTouched } from './IsBeingTouchedAction';
 export { TeleportTouchingActors } from './TeleportTouchingActorsAction';

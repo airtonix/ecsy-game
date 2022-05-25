@@ -1,4 +1,4 @@
-import { Actor, CollisionType, Vector } from 'excalibur';
+import { Actor, CollisionType, Shape, Vector } from 'excalibur';
 
 import { BehaviourTreeComponent } from '@ecsygame/behaviour-tree';
 
@@ -15,25 +15,29 @@ import { IsBeingTouched, TeleportTouchingActors } from '../Behaviours';
  */
 type PortalEntityProps = {
   position: Vector;
+  target: any;
 };
-export const PortalEntity = ({ position }: PortalEntityProps) => {
+export const PortalEntity = ({ position, target }: PortalEntityProps) => {
   const actor = new Actor({
     name: 'prop',
     pos: position,
-    collisionType: CollisionType.Passive,
+    collider: Shape.Box(16, 16),
+    collisionType: CollisionType.Fixed,
   });
 
   actor.on('collisionstart', (event) => {
-    const touchable = actor.get(TouchableComponent);
+    const { target, other } = event;
+    const touchable = target.get(TouchableComponent);
     if (!touchable) return;
-    if (touchable.touchedBy.has(actor.id.toString())) return;
-    touchable.touchedBy.set(event.actor.id.toString(), event.actor);
+    if (touchable.touchedBy.has(other.id.toString())) return;
+    touchable.touchedBy.set(other.id.toString(), other);
   });
   actor.on('collisionend', (event) => {
-    const touchable = actor.get(TouchableComponent);
+    const { target, other } = event;
+    const touchable = target.get(TouchableComponent);
     if (!touchable) return;
-    if (!touchable.touchedBy.has(actor.id.toString())) return;
-    touchable.touchedBy.delete(event.actor.id.toString());
+    if (!touchable.touchedBy.has(other.id.toString())) return;
+    touchable.touchedBy.delete(other.id.toString());
   });
 
   actor
@@ -43,13 +47,15 @@ export const PortalEntity = ({ position }: PortalEntityProps) => {
     .addComponent(
       new BehaviourTreeComponent(
         `root {
-      sequence until(IsBeingTouched) {
+      sequence while(IsBeingTouched) {
         action [TeleportTouchingActors]
       }
     }`,
         {
           IsBeingTouched,
-          TeleportTouchingActors,
+          TeleportTouchingActors: TeleportTouchingActors({
+            target,
+          }),
         }
       )
     );

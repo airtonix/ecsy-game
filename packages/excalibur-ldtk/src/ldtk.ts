@@ -1053,14 +1053,22 @@ export interface FieldInstance {
    */
   type: string;
   /**
-   * Actual value of the field instance. The value type varies, depending on `__type`:<br/>
+   * Actual value of the field instance. The value type varies, depending on `__type`:
+   *
    * - For **classic types** (ie. Integer, Float, Boolean, String, Text and FilePath), you
-   * just get the actual value with the expected type.<br/>   - For **Color**, the value is an
-   * hexadecimal string using "#rrggbb" format.<br/>   - For **Enum**, the value is a String
-   * representing the selected enum value.<br/>   - For **Point**, the value is a
-   * [GridPoint](#ldtk-GridPoint) object.<br/>   - For **Tile**, the value is a
-   * [TilesetRect](#ldtk-TilesetRect) object.<br/>   - For **EntityRef**, the value is an
-   * [EntityReferenceInfos](#ldtk-EntityReferenceInfos) object.<br/><br/>  If the field is an
+   * just get the actual value with the expected type.
+   *    - For **Color**, the value is an
+   * hexadecimal string using "#rrggbb" format.
+   *    - For **Enum**, the value is a String
+   * representing the selected enum value.
+   *    - For **Point**, the value is a
+   * [GridPoint](#ldtk-GridPoint) object.
+   *    - For **Tile**, the value is a
+   * [TilesetRect](#ldtk-TilesetRect) object.
+   *    - For **EntityRef**, the value is an
+   * [EntityReferenceInfos](#ldtk-EntityReferenceInfos) object.
+   *
+   *   If the field is an
    * array, then this `__value` will also be a JSON array.
    */
   value: any;

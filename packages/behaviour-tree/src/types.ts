@@ -6,5 +6,12 @@ export type BehaviourAction = (
   scene: Scene,
   ...args: any[]
 ) => State | undefined | string | boolean | number;
-
-export type BehaviourTreeBlackBoard = Record<string | symbol, BehaviourAction>;
+export type BehaviourCondition = (
+  entity: Entity,
+  scene: Scene,
+  ...args: any[]
+) => boolean;
+export type BehaviourTreeBlackBoard = Record<
+  string | symbol,
+  BehaviourAction | BehaviourCondition
+>;
