@@ -8,6 +8,7 @@ export { LDtkObjectComponent } from './LDtkObjectComponent';
 export { LDtkOrthogonalSystem } from './LDtkOrthogonalSystem';
 export { LDtkOrthogonalComponent } from './LDtkOrthogonalComponent';
 export { LDtkOrthogonalTilemap } from './LDtkOrthogonalTilemap';
+export { LDtkEntitySpawnerSystem } from './LDtkEntitySpawnerSystem';
 
 export * from './orthogonal';
 export * from './ldtk';
