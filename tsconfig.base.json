@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ecsygame/behaviour-tree": ["packages/behaviour-tree/src/index.ts"]
+      "@ecsygame/behaviour-tree": ["packages/behaviour-tree/src/index.ts"],
+      "@ecsygame/excalibur-ldtk": ["packages/excalibur-ldtk/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

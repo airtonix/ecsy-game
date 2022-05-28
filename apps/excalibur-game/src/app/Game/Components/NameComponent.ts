@@ -1,8 +1,8 @@
 import { Component } from 'excalibur';
 
-type NameComponentType = 'name';
+type NameComponentType = 'game.name';
 export class NameComponent extends Component<NameComponentType> {
-  readonly type: NameComponentType = 'name';
+  readonly type = 'game.name';
   public salutation!: string;
   public firstName!: string;
   public lastName!: string;

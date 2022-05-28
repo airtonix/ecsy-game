@@ -1,25 +1,32 @@
-import { Scene, vec } from 'excalibur';
+import { Engine, Entity, Scene } from 'excalibur';
 
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
+import {
+  LDtkEntitySpawnerSystem,
+  LDtkOrthogonalSystem,
+  LDtkOrthogonalTilemap,
+} from '@ecsygame/excalibur-ldtk';
 
-import { Game, getMapStart, placeActor, zoomToActor } from '../../Core/Game';
-import { NpcEntity, PlayerEntity } from '../Entities';
-import { WorldTilemap } from '../Resources';
+import { Game } from '../../Core/Game';
+import { World } from '../Resources';
 import {
   CameraFocusSystem,
   PlayerControlSystem,
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
-import { GeneralBehaviourBlackBoard } from '../Behaviours';
+import { EntityFactory } from '../Entities';
 
+export const WorldSceneKey = 'world';
 export class WorldScene extends Scene {
-  map = WorldTilemap;
-  player!: ReturnType<typeof PlayerEntity>;
-  npcs!: ReturnType<typeof NpcEntity>[];
+  public tilemap!: Entity;
 
   constructor(public game: Game) {
     super();
+  }
+
+  public onInitialize(_engine: Engine): void {
+    return;
   }
 
   public onActivate() {
@@ -27,42 +34,13 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(new RenderIdleActorsSystem());
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
     this.world.systemManager.addSystem(new CameraFocusSystem());
+    this.world.systemManager.addSystem(new BehaviourTreeSystem());
+    this.world.systemManager.addSystem(new LDtkOrthogonalSystem());
     this.world.systemManager.addSystem(
-      new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
+      new LDtkEntitySpawnerSystem(EntityFactory)
     );
 
-    this.map.addTiledMapToScene(this);
-
-    const actorLayer = this.map.data.getObjectLayerByName('Actors');
-    const actorZindex = actorLayer.getProperty<number>('zIndex');
-    this.tileMaps.forEach((tilemap, index) => {
-      const tilemapLayer = this.map.data.layers[index];
-      tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
-    });
-
-    const playerStart = getMapStart({
-      map: this.map,
-      name: 'player-start',
-    });
-    const npcStart = getMapStart({
-      map: this.map,
-      name: 'npc-start',
-    });
-    this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
-    this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
-
-    this.add(this.player);
-    this.npcs.forEach((npc) => {
-      this.add(npc);
-      placeActor(
-        npc,
-        vec(npcStart.x + 20, npcStart.y + 20),
-        actorZindex?.value || 1
-      );
-    });
-    placeActor(this.player, playerStart, actorZindex?.value || 1);
-    zoomToActor(this, this.player);
+    this.tilemap = LDtkOrthogonalTilemap(World, 'Level_1');
+    this.add(this.tilemap);
   }
 }
-
-export const WorldSceneKey = 'world';

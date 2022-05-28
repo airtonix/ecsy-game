@@ -1,0 +1,15 @@
+{
+  "name": "@ecsygame/excalibur-ldtk",
+  "version": "0.0.0",
+  "main": "./excalibur-ldtk.umd.js",
+  "module": "./excalibur-ldtk.es.js",
+  "exports": {
+    ".": {
+      "import": "./excalibur-ldtk.es.js",
+      "require": "./excalibur-ldtk.umd.js"
+    }
+  },
+  "dependencies": {
+    "ldtk": "0.8.7"
+  }
+}
