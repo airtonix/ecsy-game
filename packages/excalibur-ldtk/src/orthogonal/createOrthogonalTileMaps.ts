@@ -31,6 +31,9 @@ export function createOrthogonalTileMaps(
       layer
     );
     tilemap.z = level.getLayerZindex(layer.iid);
+    Logger.getInstance().info(
+      `Generated tilemap: ${tilemap.id} @layer:${tilemap.z} for ${layer.identifier}`
+    );
 
     tilemaps.set(layer.iid, tilemap);
     const spritesheet = spritesheets.get(tilesetUid);

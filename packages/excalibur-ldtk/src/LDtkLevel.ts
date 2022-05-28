@@ -152,7 +152,10 @@ export class LDtkLevel
   }
 
   getLayerZindex(layerId: string) {
-    return this.layerInstances.findIndex((layer) => layer.iid === layerId);
+    const index = this.layerInstances.findIndex(
+      (layer) => layer.iid === layerId
+    );
+    return this.layerInstances.length - index;
   }
 
   getEntityLayers() {
