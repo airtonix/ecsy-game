@@ -3,6 +3,7 @@ import { Engine, Entity, Scene } from 'excalibur';
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
 import {
   LDtkEntitySpawnerSystem,
+  LDtkOrthogonalColliderSystem,
   LDtkOrthogonalSystem,
   LDtkOrthogonalTilemap,
 } from '@ecsygame/excalibur-ldtk';
@@ -36,6 +37,13 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(new CameraFocusSystem());
     this.world.systemManager.addSystem(new BehaviourTreeSystem());
     this.world.systemManager.addSystem(new LDtkOrthogonalSystem());
+    this.world.systemManager.addSystem(
+      new LDtkOrthogonalColliderSystem((world, level, layer, tile) => {
+        const tileIndex = layer.autoLayerTiles.indexOf(tile);
+        const intGridCSV = layer.intGridCSV || [];
+        return intGridCSV[tileIndex] ? intGridCSV[tileIndex] === 3 : false;
+      })
+    );
     this.world.systemManager.addSystem(
       new LDtkEntitySpawnerSystem(EntityFactory)
     );

@@ -25,6 +25,7 @@ export function createLayerTiles(
       (sprite) =>
         sprite.sourceView.x === srcTileX && sprite.sourceView.y === srcTileY
     );
+
     if (!sprite) {
       Logger.getInstance().warn(
         `Cant find tile in spritesheet`,
@@ -33,6 +34,7 @@ export function createLayerTiles(
       );
       continue;
     }
+
     const [tileX, tileY] = tile.px;
     const tileMapTile = tilemap.getTileByPoint(vec(tileX, tileY));
     if (!tileMapTile) {
