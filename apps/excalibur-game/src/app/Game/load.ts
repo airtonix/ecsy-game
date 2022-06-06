@@ -1,14 +1,10 @@
 import { Loader as ExcaliburLoader, vec } from 'excalibur';
 
-import {
-  HcHumans1AImage,
-  KenyyRougeLikeTilemap,
-  WorldTilemap,
-} from './Resources';
+import { ForestDecoration2, HcHumans1AImage, World } from './Resources';
 export const load = new ExcaliburLoader([
   HcHumans1AImage,
-  KenyyRougeLikeTilemap,
-  WorldTilemap,
+  ForestDecoration2,
+  World,
 ]);
 load.backgroundColor = '#222034';
 load.logo =

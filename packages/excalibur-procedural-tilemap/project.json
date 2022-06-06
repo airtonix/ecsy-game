@@ -1,0 +1,22 @@
+{
+  "root": "packages/excalibur-procedural-tilemap",
+  "sourceRoot": "packages/excalibur-procedural-tilemap/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/excalibur-procedural-tilemap/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/excalibur-procedural-tilemap"],
+      "options": {
+        "jestConfig": "packages/excalibur-procedural-tilemap/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

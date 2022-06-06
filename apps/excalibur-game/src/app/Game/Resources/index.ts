@@ -1,4 +1,4 @@
-export { WorldTilemap, KenyyRougeLikeTilemap } from './Tilemap';
+export { World } from './WorldTilemap';
 export {
   HcHumans1AImage,
   KarenCharactorAnimations,
@@ -11,3 +11,8 @@ export {
   MarkCharactorAnimations,
   getRandomHumanAnimation,
 } from './Humans';
+export {
+  ForestDecoration2,
+  ForestPortalSpriteSheet,
+  PortalIdleAnimation,
+} from './Forest';

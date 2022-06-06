@@ -3,6 +3,9 @@
   "projects": {
     "behaviour-tree": "packages/behaviour-tree",
     "ecstra-game": "apps/ecstra-game",
-    "excalibur-game": "apps/excalibur-game"
+    "excalibur-game": "apps/excalibur-game",
+    "excalibur-ldtk": "packages/excalibur-ldtk",
+    "excalibur-marching-squares": "packages/excalibur-marching-squares",
+    "excalibur-procedural-tilemap": "packages/excalibur-procedural-tilemap"
   }
 }

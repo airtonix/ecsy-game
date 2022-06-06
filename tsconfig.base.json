@@ -15,7 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ecsygame/behaviour-tree": ["packages/behaviour-tree/src/index.ts"]
+      "@ecsygame/behaviour-tree": ["packages/behaviour-tree/src/index.ts"],
+      "@ecsygame/excalibur-ldtk": ["packages/excalibur-ldtk/src/index.ts"],
+      "@ecsygame/excalibur-marching-squares": [
+        "packages/excalibur-marching-squares/src/index.ts"
+      ],
+      "@ecsygame/excalibur-procedural-tilemap": [
+        "packages/excalibur-procedural-tilemap/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

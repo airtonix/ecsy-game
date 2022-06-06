@@ -14,8 +14,11 @@ export class BehaviourTreeComponent extends Component<'game.ai.behaviourtree'> {
   /**
    * An object containing state and actions to be used in each tick of the BehaviourTree
    */
-  blackboard?: BehaviourTreeBlackBoard;
-  constructor(public definition: string) {
+
+  constructor(
+    public definition: string,
+    public blackboard: BehaviourTreeBlackBoard
+  ) {
     super();
   }
 }

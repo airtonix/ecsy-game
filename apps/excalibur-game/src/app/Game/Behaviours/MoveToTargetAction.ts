@@ -8,7 +8,7 @@ import { MovementToTargetComponent } from '../Components';
 /**
  * Indicates to the Tree that the entity is still moving nor not
  */
-export const MoveToTarget: BehaviourAction = (entity, scene, ...args) => {
+export const MoveToTarget: BehaviourAction = (entity) => {
   const moveTo = entity.get(MovementToTargetComponent);
   const transform = entity.get(TransformComponent);
   const motion = entity.get(MotionComponent);
@@ -29,4 +29,6 @@ export const MoveToTarget: BehaviourAction = (entity, scene, ...args) => {
     moveTo.target = undefined;
     return State.SUCCEEDED;
   }
+
+  return State.RUNNING;
 };

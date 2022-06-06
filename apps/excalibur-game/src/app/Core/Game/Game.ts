@@ -1,4 +1,3 @@
-import { TiledMapResource } from '@excaliburjs/plugin-tiled';
 import {
   Actor,
   Color,
@@ -7,7 +6,6 @@ import {
   Input,
   Scene,
   Vector,
-  vec,
 } from 'excalibur';
 
 export class Game extends Engine {
@@ -56,16 +54,6 @@ export function createGame({ canvas }: CreateGameProps) {
 export function zoomToActor(scene: Scene, actor: Actor) {
   scene.camera.strategy.elasticToActor(actor, 0.2, 0.2);
   scene.camera.zoomOverTime(2, 200);
-}
-
-type GetMapStartProps = {
-  map: TiledMapResource;
-  name: string;
-};
-export function getMapStart({ map, name }: GetMapStartProps) {
-  const objects = map.data.getExcaliburObjects();
-  const start = objects[0].getObjectByName(name);
-  return vec(start?.x || 0, start?.y || 0);
 }
 
 export function placeActor(actor: Actor, position: Vector, zIndex?: number) {

@@ -1,22 +1,32 @@
-import { Scene, vec } from 'excalibur';
+import { Engine, Scene, vec } from 'excalibur';
 
 import { BehaviourTreeSystem } from '@ecsygame/behaviour-tree';
-
-import { Game, getMapStart, placeActor, zoomToActor } from '../../Core/Game';
-import { NpcEntity, PlayerEntity } from '../Entities';
-import { WorldTilemap } from '../Resources';
+// import {
+//   LDtkEntitySpawnerSystem,
+//   LDtkOrthogonalColliderSystem,
+//   LDtkOrthogonalSystem,
+//   LDtkOrthogonalTilemap,
+// } from '@ecsygame/excalibur-ldtk';
 import {
-  CameraFocusSystem,
+  PerlinChunkSystem,
+  PerlinMapSystem,
+  PerlinTileMapEntity,
+} from '@ecsygame/excalibur-procedural-tilemap';
+
+import { Game } from '../../Core/Game';
+// import { World } from '../Resources';
+import {
+  CameraFocusOnEntitySystem,
   PlayerControlSystem,
   RenderIdleActorsSystem,
   RenderMovingActorsSystem,
 } from '../Systems';
-import { GeneralBehaviourBlackBoard } from '../Behaviours';
+import { CameraFollowPointrEntity /* EntityFactory */ } from '../Entities';
 
+export const WorldSceneKey = 'world';
 export class WorldScene extends Scene {
-  map = WorldTilemap;
-  player!: ReturnType<typeof PlayerEntity>;
-  npcs!: ReturnType<typeof NpcEntity>[];
+  public map!: ReturnType<typeof PerlinTileMapEntity>;
+  public cameraFocusOn!: ReturnType<typeof CameraFollowPointrEntity>;
 
   constructor(public game: Game) {
     super();
@@ -26,43 +36,28 @@ export class WorldScene extends Scene {
     this.world.systemManager.addSystem(new PlayerControlSystem());
     this.world.systemManager.addSystem(new RenderIdleActorsSystem());
     this.world.systemManager.addSystem(new RenderMovingActorsSystem());
-    this.world.systemManager.addSystem(new CameraFocusSystem());
-    this.world.systemManager.addSystem(
-      new BehaviourTreeSystem(GeneralBehaviourBlackBoard, this)
-    );
+    this.world.systemManager.addSystem(new CameraFocusOnEntitySystem());
+    this.world.systemManager.addSystem(new BehaviourTreeSystem());
+    const chunkSystem = new PerlinChunkSystem();
+    this.world.systemManager.addSystem(chunkSystem);
+    this.world.systemManager.addSystem(new PerlinMapSystem());
 
-    this.map.addTiledMapToScene(this);
+    // this.world.systemManager.addSystem(new LDtkOrthogonalSystem());
+    // this.world.systemManager.addSystem(
+    //   new LDtkOrthogonalColliderSystem((world, level, layer, tile) => {
+    //     const tileIndex = layer.autoLayerTiles.indexOf(tile);
+    //     const intGridCSV = layer.intGridCSV || [];
+    //     return intGridCSV[tileIndex] ? intGridCSV[tileIndex] === 3 : false;
+    //   })
+    // );
+    // this.world.systemManager.addSystem(
+    //   new LDtkEntitySpawnerSystem(EntityFactory)
+    // );
+    // this.tilemap = LDtkOrthogonalTilemap(World, 'Level_1');
+    // this.add(this.tilemap);
 
-    const actorLayer = this.map.data.getObjectLayerByName('Actors');
-    const actorZindex = actorLayer.getProperty<number>('zIndex');
-    this.tileMaps.forEach((tilemap, index) => {
-      const tilemapLayer = this.map.data.layers[index];
-      tilemap.z = tilemapLayer.getProperty<number>('zIndex')?.value || 0;
-    });
-
-    const playerStart = getMapStart({
-      map: this.map,
-      name: 'player-start',
-    });
-    const npcStart = getMapStart({
-      map: this.map,
-      name: 'npc-start',
-    });
-    this.player = PlayerEntity({ firstName: 'Player1', position: playerStart });
-    this.npcs = [NpcEntity({ firstName: 'Mark', position: npcStart })];
-
-    this.add(this.player);
-    this.npcs.forEach((npc) => {
-      this.add(npc);
-      placeActor(
-        npc,
-        vec(npcStart.x + 20, npcStart.y + 20),
-        actorZindex?.value || 1
-      );
-    });
-    placeActor(this.player, playerStart, actorZindex?.value || 1);
-    zoomToActor(this, this.player);
+    this.cameraFocusOn = CameraFollowPointrEntity({ position: vec(0, 0) });
+    this.add(this.cameraFocusOn);
+    chunkSystem.camera = this.cameraFocusOn.pos;
   }
 }
-
-export const WorldSceneKey = 'world';
