@@ -130,8 +130,8 @@ export class ColliderMesh {
         this.meshFromPoints(
           square.centerTop,
           square.topRight,
-          square.bottomLeft,
           square.bottomRight,
+          square.bottomLeft,
           square.centerLeft
         );
         break;

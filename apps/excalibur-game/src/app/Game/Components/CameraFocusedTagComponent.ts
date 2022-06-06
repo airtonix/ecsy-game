@@ -1,7 +1,10 @@
 import { TagComponent } from 'excalibur';
 
-export class CameraFocusedTagComponent extends TagComponent<'game.camera.focus'> {
+const CameraFocusedTagComponentType = 'game.camera.focus' as const;
+export class CameraFocusedTagComponent extends TagComponent<
+  typeof CameraFocusedTagComponentType
+> {
   constructor() {
-    super('game.camera.focus');
+    super(CameraFocusedTagComponentType);
   }
 }

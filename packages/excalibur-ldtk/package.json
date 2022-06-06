@@ -8,8 +8,5 @@
       "import": "./excalibur-ldtk.es.js",
       "require": "./excalibur-ldtk.umd.js"
     }
-  },
-  "dependencies": {
-    "ldtk": "0.8.7"
   }
 }

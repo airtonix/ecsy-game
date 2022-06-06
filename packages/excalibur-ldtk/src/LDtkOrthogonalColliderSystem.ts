@@ -11,8 +11,6 @@ import { LayerInstance, TileInstance } from './ldtk';
 import { LDtkLevel } from './LDtkLevel';
 import { LDtkOrthogonalComponent } from './LDtkOrthogonalComponent';
 import { LDtkWorldResource } from './LDtkWorldResource';
-import { ColliderMesh, meshRenderer } from './navmesh';
-import { createOrthogonalSolidityMap } from './orthogonal';
 
 export class LDtkOrthogonalColliderSystem extends System<
   LDtkOrthogonalComponent,
@@ -45,15 +43,6 @@ export class LDtkOrthogonalColliderSystem extends System<
     if (_entityAddedOrRemoved.type === 'Entity Added') {
       const level = component.world.getLevelByIdentifier(component.levelId);
       if (!level) return;
-
-      const solidMap = createOrthogonalSolidityMap(level, (layer, tile) =>
-        this.solidIntGridQuery(component.world, level, layer, tile)
-      );
-
-      for (const map of solidMap.values()) {
-        const mesh = new ColliderMesh(map, 16);
-        meshRenderer(mesh, this.scene);
-      }
     }
 
     if (_entityAddedOrRemoved.type === 'Entity Removed') {

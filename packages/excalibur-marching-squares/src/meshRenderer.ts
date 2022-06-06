@@ -1,4 +1,4 @@
-import { Color, Scene } from 'excalibur';
+import { Scene } from 'excalibur';
 
 import { ColliderMesh } from './ColliderMesh';
 import { renderMeshNode } from './renderMeshNode';

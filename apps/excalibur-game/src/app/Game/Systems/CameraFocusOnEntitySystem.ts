@@ -10,7 +10,7 @@ import {
 import { zoomToActor } from '../../Core/Game';
 import { CameraFocusedTagComponent } from '../Components';
 
-export class CameraFocusSystem extends System<
+export class CameraFocusOnEntitySystem extends System<
   CameraFocusedTagComponent | BodyComponent
 > {
   systemType: SystemType = SystemType.Update;
@@ -27,12 +27,12 @@ export class CameraFocusSystem extends System<
 
     if (!(entity instanceof Actor))
       throw new Error(
-        `CameraFocusSystem can only track an Actor with CameraFocusedTagComponent. The entity ${entity.id} is not an Actor`
+        `CameraFocusOnEntitySystem can only track an Actor with CameraFocusedTagComponent. The entity ${entity.id} is not an Actor`
       );
 
     if (entities.length > 1)
       throw new Error(
-        `CameraFocusSystem can only track one Actor. The following entities have CameraFocusedTagComponent: ${entities
+        `CameraFocusOnEntitySystem can only track one Actor. The following entities have CameraFocusedTagComponent: ${entities
           .map((entity) => entity.id)
           .join(',')}`
       );

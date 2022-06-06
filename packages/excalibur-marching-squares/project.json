@@ -1,0 +1,28 @@
+{
+  "root": "packages/excalibur-marching-squares",
+  "sourceRoot": "packages/excalibur-marching-squares/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/excalibur-marching-squares/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/excalibur-marching-squares"
+      ],
+      "options": {
+        "jestConfig": "packages/excalibur-marching-squares/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
